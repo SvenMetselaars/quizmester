@@ -30,11 +30,16 @@ namespace quizmester
         // the max screen number... change this if you add more screens
         int ScreenMax = 3;
 
-        string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=database;Integrated Security=True;TrustServerCertificate=True";
+        string connectionString;
+
+        // main class connection string
+        ExecuteQuery Query = new ExecuteQuery();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            connectionString = Query.connectionString;
 
             // update screen
             ScreenCheck();
@@ -45,34 +50,16 @@ namespace quizmester
         /// </summary>
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
+            string L_Username = Tbx_Username_L.Text;
+            string L_Password = Pbx_Password_L.Password;
+
             // SQL query with parameters
-            string query = "SELECT COUNT(*) FROM Accounts WHERE Username = @Username AND Password = @Password";
+            int count = Query.ExecuteQueryCount("SELECT COUNT(*) FROM Accounts WHERE Username ='" + L_Username + "'AND Password ='" + L_Password + "';");
 
-            string username = Tbx_Username_L.Text;
-            string password = Pbx_Password_L.Password;
-
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            if (count == 1)
             {
-                conn.Open();
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    // Add parameter values to avoid SQL injection
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    cmd.Parameters.AddWithValue("@Password", password);
-
-                    // ExecuteScalar returns the first column of the first row
-                    int count = (int)cmd.ExecuteScalar();
-
-                    if (count == 1)
-                    {
-                        // Login successful
-                        MessageBox.Show("Login successful!");
-                        // go to game choise screen
-                        CurrentScreen = 3;
-                    }
-                }
+                // go to game choise screen
+                CurrentScreen = 3;
             }
 
             // update screen
@@ -95,37 +82,25 @@ namespace quizmester
                     {
                         Pbx_Password_S.Password = "";
                         Pbx_Password2_S.Password = "";
-                        using (SqlConnection conn = new SqlConnection(connectionString))
+
+
+                        int count = Query.ExecuteQueryCount("SELECT COUNT(*) FROM Accounts WHERE Username ='" + L_Username + "';");
+
+                        if (count == 1)
                         {
-                            conn.Open();
-                            string query = "INSERT INTO Accounts (Username, Password, Type) VALUES (@Username, @Password, @Type)";
-                            string query2 = "SELECT COUNT(*) FROM Accounts WHERE Username = @Username";
-                            using (SqlCommand cmd2 = new SqlCommand(query2, conn))
-                            {
-                                cmd2.Parameters.AddWithValue("@Username", L_Username);
-                                int count = Convert.ToInt32(cmd2.ExecuteScalar());
-                                if (count == 1)
-                                {
-                                    MessageBox.Show("Username already exists");
-                                    return;
-                                }
-                            }
-
-                            Tbx_Username_S.Text = "";
-                            using (SqlCommand cmd = new SqlCommand(query, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@Username", L_Username);
-                                cmd.Parameters.AddWithValue("@Password", L_Password);
-                                cmd.Parameters.AddWithValue("@Type", "user");
-
-                                int rows = cmd.ExecuteNonQuery();
-
-                                if (rows > 0)
-                                    MessageBox.Show("Sign up successful!");
-                                else
-                                    MessageBox.Show("Error signing up.");
-                            }
+                            MessageBox.Show("Username already exists");
+                            return;
                         }
+
+                        Tbx_Username_S.Text = "";
+
+                        string L_User = "User";
+                        int row = Query.ExecuteQueryNonQuery("INSERT INTO Accounts (Username, Password, Type) VALUES ('" + L_Username + "','" + L_Password + "','" + L_User + "');");
+
+                        if (row > 0)
+                            CurrentScreen = 3;
+                        else
+                            MessageBox.Show("Error signing up.");
                     }
                     else
                     {

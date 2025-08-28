@@ -6,627 +6,473 @@
         xmlns:local="clr-namespace:quizmester"
         mc:Ignorable="d"
         Title="Pathoot Login" WindowStartupLocation="CenterScreen" x:Name="Main" 
-        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="False" Width="1920" Height="1080">
-    <Grid>
-        <Grid x:Name="StartupGrid" Visibility="Collapsed">
+        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" Width="1920" Height="1080">
 
-            <!-- Background gradient -->
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#4B0082" Offset="0.0"/>
-                    <GradientStop Color="#6A0DAD" Offset="1.0"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-
-            <!--#region background imgs -->
-
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="34,329,690,46" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-70.679"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="448,37,278,338" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="65.04"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="475,401,250,-26" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="179.365"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="244,10,481,365" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-87.094"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="607,98,118,277" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="52.043"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="206,317,518,58"/>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="89,82,636,293" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-41.253"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="708,299,17,76" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="85.613"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="629,216,96,159"/>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="169,162,556,213" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="52.043"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="738,-5,-13,380" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-41.253"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="715,115,10,260" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="85.613"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="47,185,678,190" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="65.04"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="26,18,699,357" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-70.679"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="127,253,598,122" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="65.04"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="304,370,421,5" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="179.365"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="591,327,134,48" RenderTransformOrigin="0.5,0.5">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-87.094"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <!-- Lower opacity so gradient shows through -->
-
-            <!--#endregion-->
-
-            <!--#region login screen -->
-
-            <!-- Centered Login Card -->
-            <Border Background="White" CornerRadius="15" Padding="30" x:Name="Screen1" Visibility="Collapsed"
-        Width="338" Height="286" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="5" Opacity="0.3"/>
-                </Border.Effect>
-
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="242">
-                    <!-- App Title -->
-                    <TextBlock Text="Pathoot" FontSize="28" FontWeight="Bold" 
-                   Foreground="#4B0082" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-
-                    <!-- Username -->
-                    <TextBlock Text="Username" FontSize="14" Margin="0,5,0,2"/>
-                    <TextBox x:Name="Tbx_Username_L" Width="250" Height="30" Padding="5"
-                 BorderBrush="#6A0DAD" BorderThickness="1" 
-                 Background="#F9F9F9"/>
-
-                    <!-- Password -->
-                    <TextBlock Text="Password" FontSize="14" Margin="0,15,0,2"/>
-                    <PasswordBox x:Name="Pbx_Password_L" Width="250" Height="30" Padding="5"
-                     BorderBrush="#6A0DAD" BorderThickness="1"
-                     Background="#F9F9F9"/>
-
-                    <!-- Login Button -->
-                    <Button 
-                    x:Name="BtnLogin"
-                    Content="Login" 
-                    Width="150" 
-                    Height="35" 
-                    BorderBrush="#6A0DAD"
-                    Background="#6A0DAD" Foreground="White"
-                    Margin="0,10,0,5" Click="BtnLogin_Click">
-
-                    </Button>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="Don’t have an account? " 
-                   FontSize="12" Foreground="Gray"/>
-                        <Button x:Name="BtnSignUpScreen" 
-                        Content="Sign up" 
-                Background="Transparent" 
-                Foreground="Blue" 
-                FontSize="12"
-                FontWeight="Bold" 
-                BorderThickness="0" 
-                Cursor="Hand" 
-                Padding="0" Click="BtnSignUpScreen_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-
-            <!--#endregion-->
-
-            <!--#region SignUp screen -->
-
-            <!-- Centered Login Card -->
-            <Border Background="White" CornerRadius="15" Padding="30" 
-        x:Name="Screen2" Visibility="Visible"
-        Width="338" Height="361" 
-        HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="5" Opacity="0.3"/>
-                </Border.Effect>
-
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="309">
-                    <!-- App Title -->
-                    <TextBlock Text="Pathoot" FontSize="28" FontWeight="Bold" 
-                   Foreground="#4B0082" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-
-                    <!-- Username -->
-                    <TextBlock Text="Username" FontSize="14" Margin="0,5,0,2"/>
-                    <TextBox x:Name="Tbx_Username_S" Width="250" Height="30" Padding="5"
-                 BorderBrush="#6A0DAD" BorderThickness="1" Background="#F9F9F9"/>
-
-                    <!-- Password -->
-                    <TextBlock Text="Password" FontSize="14" Margin="0,15,0,2"/>
-                    <PasswordBox x:Name="Pbx_Password_S" Width="250" Height="30" Padding="5"
-                     BorderBrush="#6A0DAD" BorderThickness="1" Background="#F9F9F9"/>
-
-                    <!-- Password Again -->
-                    <TextBlock Text="Password Again" FontSize="14" Margin="0,15,0,2"/>
-                    <PasswordBox x:Name="Pbx_Password2_S" Width="250" Height="30" Padding="5"
-                     BorderBrush="#6A0DAD" BorderThickness="1" Background="#F9F9F9"/>
-
-                    <!-- Sign Up Button -->
-                    <Button x:Name="BtnSignUp"
-                Content="Sign Up" 
-                Width="150" Height="35" 
-                BorderBrush="#6A0DAD"
-                Background="#6A0DAD" Foreground="White"
-                FontWeight="Bold"
-                Margin="0,10,0,5"
-                Click="BtnSignUp_Click"/>
-
-                    <!-- Switch to Login Screen -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="Already have an account? " FontSize="12" Foreground="Gray"/>
-                        <Button x:Name="BtnLoginScreen" 
-                    Content="Login" 
-                    Background="Transparent" 
-                    Foreground="Blue" 
-                    FontSize="12"
-                    FontWeight="Bold" 
-                    BorderThickness="0" 
-                    Cursor="Hand" 
-                    Padding="0" 
-                    Click="BtnLoginScreen_Click"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-
-            <!--#endregion-->
-
-            <Button 
-                x:Name="BtnClose"
-                Content="X" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Top" 
-                Width="50" Height="50" 
-                Background="Transparent" 
-                Foreground="Red" 
-                FontSize="36" 
-                BorderBrush="Transparent" 
-                FontWeight="Bold" 
-                Click="BtnClose_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-        </Grid>
-
-        <Grid x:Name="MainGrid">
-            <Grid x:Name="Screen3">
-
-
-            </Grid>
-            <Grid Height="100" VerticalAlignment="Top">
-
-                <!-- Background gradient -->
-                <Grid.Background>
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#6A0DAD" Offset="0.0"/>
-                        <GradientStop Color="#4B0082" Offset="1.0"/>
+                        <GradientStop Color="#8A2BE2" Offset="1.0"/>
                     </LinearGradientBrush>
-                </Grid.Background>
-
-                <!--#region background imgs -->
-
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="736,277,1109,-252" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-70.679"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1748,643,97,-618" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="434,197,1411,-172" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="179.365"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="815,928,1030,-903" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-87.094"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1486,891,359,-866" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="52.043"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="960,685,885,-660"/>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1080,412,765,-387" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-41.253"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="987,90,858,-66" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="85.613"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1371,556,474,-531"/>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="152,72,1693,-47" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="52.043"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1290,89,555,-64" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-41.253"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="413,492,1432,-467" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="85.613"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="116,511,1729,-486" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="197,824,1648,-799" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-70.679"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="650,724,1195,-699" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1751,47,94,-22" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="179.365"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1600,304,245,-279" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="-87.094"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="328,17,1517,8" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="179.365"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="568,60,1277,-34" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="179.365"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1144,0,701,25" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="179.365"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1520,50,325,-25" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="179.365"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="230,272,1615,-247" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="52.043"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="372,662,1473,-637" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="474,870,1371,-845" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="758,476,1087,-451" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1306,312,539,-287" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1182,818,663,-793" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1744,903,101,-878" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <Image Source="/img/Pathoot.png" Stretch="UniformToFill" Opacity="0.25" Height="75" Width="75" Margin="1766,371,79,-346" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="65.04"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <!-- Lower opacity so gradient shows through -->
-
-                <!--#endregion-->
-
-                <Label x:Name="lblname" Content="Pathoot" FontSize="50" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Button 
-                Content="X" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Top" 
-                Width="85" Height="85" 
-                Background="Transparent" 
-                Foreground="Red" 
-                FontSize="50" 
-                BorderBrush="Transparent" 
-                FontWeight="Bold" 
-                Click="BtnClose_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#7B1FA2" Offset="0.0"/>
+                                            <GradientStop Color="#9C27B0" Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#6A0DAD" BlurRadius="10" ShadowDepth="0" Opacity="0.7"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#4A0E4E" Offset="0.0"/>
+                                            <GradientStop Color="#6A1B9A" Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#6A0DAD"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#6A0DAD"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#6A0DAD" BlurRadius="8" ShadowDepth="0" Opacity="0.3"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern PasswordBox Style -->
+        <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#6A0DAD"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#6A0DAD"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                                <Setter TargetName="border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#6A0DAD" BlurRadius="8" ShadowDepth="0" Opacity="0.3"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Link Button Style -->
+        <Style x:Key="LinkButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#6A0DAD"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock x:Name="textBlock" Text="{TemplateBinding Content}" 
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   FontSize="{TemplateBinding FontSize}"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="textBlock" Property="TextDecorations" Value="Underline"/>
+                                <Setter TargetName="textBlock" Property="Foreground" Value="#8A2BE2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Close Button Style -->
+        <Style x:Key="CloseButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF6B6B"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#E55555"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid x:Name="StartupGrid" Visibility="Visible">
+            <!-- Enhanced Background with animated gradient -->
+            <Grid.Background>
+                <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
+                    <GradientStop Color="#1A0033" Offset="0.0"/>
+                    <GradientStop Color="#4B0082" Offset="0.4"/>
+                    <GradientStop Color="#6A0DAD" Offset="0.8"/>
+                    <GradientStop Color="#2D1B69" Offset="1.0"/>
+                </RadialGradientBrush>
+            </Grid.Background>
+
+            <!-- Simplified and more elegant background pattern -->
+            <Canvas>
+                <!-- Floating circles for modern look -->
+                <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="100" Canvas.Top="200"/>
+                <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="100"/>
+                <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="300"/>
+                <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="800" Canvas.Top="150"/>
+                <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="400" Canvas.Top="250"/>
+
+                <!-- Modern geometric shapes -->
+                <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="200" Canvas.Top="350">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="45"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="80">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="30"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+            </Canvas>
+
+            <!-- Login Card with Glass Effect -->
+            <Border x:Name="Screen1" Visibility="Collapsed"
+                    Width="380" Height="398" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    CornerRadius="20">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.95">
+                        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                        <GradientStop Color="#F8F9FA" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="8" Opacity="0.3"/>
+                </Border.Effect>
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40,30">
+                    <!-- App Title with Icon -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                        <Ellipse Width="40" Height="40" Margin="0,0,10,0">
+                            <Ellipse.Fill>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#6A0DAD" Offset="0"/>
+                                    <GradientStop Color="#8A2BE2" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Text="Pathoot" FontSize="32" FontWeight="Bold" 
+                                   Foreground="#2C3E50" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Username Field -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Username" FontSize="13" FontWeight="SemiBold" 
+                                   Foreground="#5D6D7E" Margin="0,0,0,5"/>
+                        <TextBox x:Name="Tbx_Username_L" Width="280" Height="40" 
+                                 Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+
+                    <!-- Password Field -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Password" FontSize="13" FontWeight="SemiBold" 
+                                   Foreground="#5D6D7E" Margin="0,0,0,5"/>
+                        <PasswordBox x:Name="Pbx_Password_L" Width="280" Height="40" 
+                                     Style="{StaticResource ModernPasswordBox}"/>
+                    </StackPanel>
+
+                    <!-- Login Button -->
+                    <Button x:Name="BtnLogin" Content="Sign In" Width="280" Height="45" 
+                            Style="{StaticResource ModernButton}" Margin="0,0,0,15"
+                            Click="BtnLogin_Click"/>
+
+                    <!-- Sign Up Link -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Don't have an account? " FontSize="12" 
+                                   Foreground="#7B8794" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnSignUpScreen" Content="Sign up" 
+                                Style="{StaticResource LinkButton}" FontSize="12"
+                                Click="BtnSignUpScreen_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Sign Up Card -->
+            <Border x:Name="Screen2" Visibility="Collapsed"
+                    Width="380" Height="442" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    CornerRadius="20">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity="0.95">
+                        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                        <GradientStop Color="#F8F9FA" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="8" Opacity="0.3"/>
+                </Border.Effect>
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40,30">
+                    <!-- App Title with Icon -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                        <Ellipse Width="40" Height="40" Margin="0,0,10,0">
+                            <Ellipse.Fill>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#6A0DAD" Offset="0"/>
+                                    <GradientStop Color="#8A2BE2" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Text="Pathoot" FontSize="32" FontWeight="Bold" 
+                                   Foreground="#2C3E50" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Username Field -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Username" FontSize="13" FontWeight="SemiBold" 
+                                   Foreground="#5D6D7E" Margin="0,0,0,5"/>
+                        <TextBox x:Name="Tbx_Username_S" Width="280" Height="40" 
+                                 Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+
+                    <!-- Password Field -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Password" FontSize="13" FontWeight="SemiBold" 
+                                   Foreground="#5D6D7E" Margin="0,0,0,5"/>
+                        <PasswordBox x:Name="Pbx_Password_S" Width="280" Height="40" 
+                                     Style="{StaticResource ModernPasswordBox}"/>
+                    </StackPanel>
+
+                    <!-- Confirm Password Field -->
+                    <StackPanel Margin="0,0,0,20">
+                        <TextBlock Text="Confirm Password" FontSize="13" FontWeight="SemiBold" 
+                                   Foreground="#5D6D7E" Margin="0,0,0,5"/>
+                        <PasswordBox x:Name="Pbx_Password2_S" Width="280" Height="40" 
+                                     Style="{StaticResource ModernPasswordBox}"/>
+                    </StackPanel>
+
+                    <!-- Sign Up Button -->
+                    <Button x:Name="BtnSignUp" Content="Create Account" Width="280" Height="45" 
+                            Style="{StaticResource ModernButton}" Margin="0,0,0,15"
+                            Click="BtnSignUp_Click"/>
+
+                    <!-- Login Link -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Already have an account? " FontSize="12" 
+                                   Foreground="#7B8794" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnLoginScreen" Content="Sign in" 
+                                Style="{StaticResource LinkButton}" FontSize="12"
+                                Click="BtnLoginScreen_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Modern Close Button -->
+            <Button x:Name="BtnClose" Content="×" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top" 
+                    Width="50" Height="50" Margin="20,20,20,0"
+                    Style="{StaticResource CloseButton}" FontSize="24"
+                    Click="BtnClose_Click"/>
         </Grid>
 
+        <!-- Main Application Grid -->
+        <Grid x:Name="MainGrid" Visibility="Visible">
+            <Grid.Background>
+                <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
+                    <GradientStop Color="#1A0033" Offset="0.0"/>
+                    <GradientStop Color="#4B0082" Offset="0.4"/>
+                    <GradientStop Color="#6A0DAD" Offset="0.8"/>
+                    <GradientStop Color="#2D1B69" Offset="1.0"/>
+                </RadialGradientBrush>
+            </Grid.Background>
+            <!-- Simplified and more elegant background pattern -->
+            
+            <!--#region shapes -->
+
+            <Canvas>
+                <!-- Floating circles for modern look -->
+                <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="100" Canvas.Top="300"/>
+                <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
+                <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
+                <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="800" Canvas.Top="250"/>
+                <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="400" Canvas.Top="350"/>
+
+                <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="1300" Canvas.Top="600"/>
+                <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="1450" Canvas.Top="440"/>
+                <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="1600" Canvas.Top="300"/>
+                <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="1600" Canvas.Top="600"/>
+                <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="1400" Canvas.Top="750"/>
+
+                <!-- Modern geometric shapes -->
+                <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="200" Canvas.Top="450">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="45"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="30"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                
+                <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="1300" Canvas.Top="450">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="30"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="1700" Canvas.Top="780">
+                    <Rectangle.RenderTransform>
+                        <RotateTransform Angle="45"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+            </Canvas>
+
+            <!--#endregion -->
+
+            <Grid x:Name="Screen3" Margin="0,100,0,0">
+                <!-- Your main content here -->
+                
+            </Grid>
+
+            <!-- Enhanced Header -->
+            <Grid Height="100" VerticalAlignment="Top">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#6A0DAD" Offset="0.0"/>
+                        <GradientStop Color="#8A2BE2" Offset="0.5"/>
+                        <GradientStop Color="#6A0DAD" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <!-- Subtle geometric pattern -->
+                <Canvas>
+                    <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.1" Canvas.Left="100" Canvas.Top="30">
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="45"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <Ellipse Width="60" Height="60" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="1200" Canvas.Top="20"/>
+                    <Rectangle Width="25" Height="25" Fill="#FFFFFF" Opacity="0.12" Canvas.Left="800" Canvas.Top="40">
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="30"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Canvas>
+
+                <!-- App Title with improved styling -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Ellipse Width="50" Height="50" Margin="0,0,15,0">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush>
+                                <GradientStop Color="#FFFFFF" Offset="0"/>
+                                <GradientStop Color="#E8E8E8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock x:Name="lblname" Text="Pathoot" FontSize="42" FontWeight="Bold" 
+                               Foreground="White" VerticalAlignment="Center">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#000000" BlurRadius="3" ShadowDepth="2" Opacity="0.3"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
+
+                <!-- Header Close Button -->
+                <Button Content="×" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Width="60" Height="60" Margin="20,20,20,0"
+                        Style="{StaticResource CloseButton}" FontSize="30"
+                        Click="BtnClose_Click"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
