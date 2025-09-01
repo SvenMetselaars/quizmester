@@ -421,8 +421,73 @@
 
             <Grid x:Name="Screen3" Margin="0,100,0,0">
                 <!-- Your main content here -->
-                
+                <WrapPanel Orientation="Horizontal" x:Name="WplQuizes">
+
+                </WrapPanel>
             </Grid>
+
+            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10">
+                <Border.Background>
+                    <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
+                        <GradientStop Color="#1A0033" Offset="0.0"/>
+                        <GradientStop Color="#4B0082" Offset="0.4"/>
+                        <GradientStop Color="#6A0DAD" Offset="0.8"/>
+                        <GradientStop Color="#2D1B69" Offset="1.0"/>
+                    </RadialGradientBrush>
+                </Border.Background>
+                
+                <Grid>
+                    
+                    <!--#region shapes -->
+
+                <Canvas>
+                    <!-- Floating circles for modern look -->
+                    <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="50" Canvas.Top="40"/>
+                    <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
+                    <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
+                    <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="600" Canvas.Top="750"/>
+                    <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="350" Canvas.Top="350"/>
+
+                    <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="150" Canvas.Top="600"/>
+                    <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="400" Canvas.Top="700"/>
+
+                    <!-- Modern geometric shapes -->
+                    <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="150" Canvas.Top="350">
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="45"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="30"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="550" Canvas.Top="50">
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="30"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    
+                </Canvas>
+                
+                <!--#endregion-->
+                    
+                    <Button Content="×" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Width="60" Height="60" Margin="20,20,20,0"
+                        Style="{StaticResource CloseButton}" FontSize="30"
+                        Click="BtnLogin_Click"/>
+                    
+                    <TextBlock x:Name="LblQuizName" Text="ERROR" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="100"/>
+                    <TextBlock x:Name="LblQuizCreator" Text="Created by: Anonoumes" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Margin="0,125,0,0"/>
+                    <StackPanel x:Name="TplAllHighScores" Orientation="Vertical" >
+                        
+                    </StackPanel>
+                    <Button x:Name="BtnStartQuiz" FontSize="48" Content="Start Quiz" Width="300" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50" Style="{StaticResource ModernButton}" Click="BtnStartQuiz_Click"/>
+
+                </Grid>
+
+            </Border>
 
             <!-- Enhanced Header -->
             <Grid Height="100" VerticalAlignment="Top">

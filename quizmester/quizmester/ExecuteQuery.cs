@@ -10,9 +10,18 @@ namespace quizmester
 {
     class ExecuteQuery
     {
+        /// <summary>
+        /// string for the connection to the database
+        /// </summary>
         public string connectionString { get; } = "Data Source=localhost\\sqlexpress;Initial Catalog=database;Integrated Security=True;TrustServerCertificate=True";
 
-        public int ExecuteQueryCount(string query)
+        /// <summary>
+        /// this function will execute a query and return the count of rows affected.
+        /// ExecuteScalar is used to get a single value from the database
+        /// </summary>
+        /// <param name="query">the command you want to have executed</param>
+        /// <returns></returns>
+        public int ExecuteScalar(string query)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -29,6 +38,12 @@ namespace quizmester
             }
         }
 
+        /// <summary>
+        /// this function will execute a query and return the number of rows affected.
+        /// ExecuteNonQuery is used for insert, update, delete commands
+        /// </summary>
+        /// <param name="query">the command you want to have executed</param>
+        /// <returns></returns>
         public int ExecuteQueryNonQuery(string query)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -41,6 +56,24 @@ namespace quizmester
                 {
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public DataTable GetDataTable(string query)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
                 }
             }
         }
