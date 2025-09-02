@@ -60,6 +60,11 @@ namespace quizmester
             }
         }
 
+        /// <summary>
+        /// this is used to get information from the database and return it as a datatable
+        /// </summary>
+        /// <param name="query">the command you want to have executed</param>
+        /// <returns></returns>
         public DataTable GetDataTable(string query)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))

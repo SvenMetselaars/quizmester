@@ -494,7 +494,7 @@
             </Grid>
 
             <Grid x:Name="Screen6" Margin="0,100,0,0">
-                <ProgressBar HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
+                <ProgressBar x:Name="PbrTimeLeft" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
                     <ProgressBar.Background>
                         <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">
                             <GradientStop Color="#3D1A66" Offset="0.1"/>
@@ -504,11 +504,68 @@
                         </RadialGradientBrush>
                     </ProgressBar.Background>
                 </ProgressBar>
-                <Label Content="Test" HorizontalAlignment="Center" Margin="0,50,0,0" FontSize="64" Foreground="White" MaxWidth="1920"/>
-                <StackPanel x:Name="SplAnswers" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000" Height="600" Margin="0,125,0,0">
+                <TextBlock x:Name="LblQuestion" Text="Test" HorizontalAlignment="Center" Margin="0,50,0,0" FontSize="64" Foreground="White" MaxWidth="1920" TextWrapping="Wrap"/>
+                <UniformGrid  x:Name="SplAnswers" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000" Height="600" Margin="0,125,0,0">
 
-                </StackPanel>
+                </UniformGrid>
+                <Button x:Name="BtnSkip" FontSize="48" Content="Skip" Width="300" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25" Style="{StaticResource ModernButton}" Click="BtnSkip_Click" ></Button>
             </Grid>
+
+            <Border x:Name="Screen7" Width="800" Height="800" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Collapsed">
+                <Border.Background>
+                    <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
+                        <GradientStop Color="#1A0033" Offset="0.0"/>
+                        <GradientStop Color="#4B0082" Offset="0.4"/>
+                        <GradientStop Color="#6A0DAD" Offset="0.8"/>
+                        <GradientStop Color="#2D1B69" Offset="1.0"/>
+                    </RadialGradientBrush>
+                </Border.Background>
+
+                <Grid>
+
+                    <!--#region shapes -->
+
+                    <Canvas>
+                        <!-- Floating circles for modern look -->
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="50" Canvas.Top="40"/>
+                        <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
+                        <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
+                        <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="350" Canvas.Top="350"/>
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="150" Canvas.Top="600"/>
+
+                        <!-- Modern geometric shapes -->
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="150" Canvas.Top="350">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="550" Canvas.Top="50">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                    </Canvas>
+
+                    <!--#endregion-->
+
+                    <TextBlock x:Name="LblQuizNameScore" Text="ERROR" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="100" Foreground="White"/>
+                    <TextBlock x:Name="LblQuizCreatorScore"  Text="Created by: Anonymous" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Margin="0,125,0,0" Foreground="White"/>
+                    <TextBlock Text="Your Score:" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="100" Foreground="White" Margin="0,175,0,0"/>
+                    <TextBlock x:Name="LblYourScore" Text="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="150" Foreground="White" Margin="0,300,0,0"/>
+                    <TextBlock Text="quiz Score:" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="0,575,400,0"/>
+                    <TextBlock x:Name="LblQuestionScore" Text="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="0,625,400,0"/>
+                    <TextBlock Text="Time Score:" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="400,575,0,0"/>
+                    <TextBlock x:Name="LblTimeScore" Text="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="400,625,0,0"/>
+
+                </Grid>
+
+            </Border>
 
             <!-- Enhanced Header -->
             <Grid Height="100" VerticalAlignment="Top">
