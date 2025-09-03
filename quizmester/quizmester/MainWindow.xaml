@@ -493,7 +493,7 @@
                 <Label x:Name="LblStartTimer" Content="5" FontSize="250" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
             </Grid>
 
-            <Grid x:Name="Screen6" Margin="0,100,0,0">
+            <Grid x:Name="Screen6" Margin="0,100,0,0" Visibility="Collapsed">
                 <ProgressBar x:Name="PbrTimeLeft" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
                     <ProgressBar.Background>
                         <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">
@@ -566,6 +566,146 @@
                 </Grid>
 
             </Border>
+
+            <Border x:Name="Screen8" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Collapsed">
+                <Border.Background>
+                    <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
+                        <GradientStop Color="#1A0033" Offset="0.0"/>
+                        <GradientStop Color="#4B0082" Offset="0.4"/>
+                        <GradientStop Color="#6A0DAD" Offset="0.8"/>
+                        <GradientStop Color="#2D1B69" Offset="1.0"/>
+                    </RadialGradientBrush>
+                </Border.Background>
+
+                <Grid>
+
+                    <!--#region shapes -->
+
+                    <Canvas>
+                        <!-- Floating circles for modern look -->
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="50" Canvas.Top="40"/>
+                        <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
+                        <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
+                        <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="600" Canvas.Top="750"/>
+                        <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="350" Canvas.Top="350"/>
+
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="150" Canvas.Top="600"/>
+                        <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="400" Canvas.Top="700"/>
+
+                        <!-- Modern geometric shapes -->
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="150" Canvas.Top="350">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="550" Canvas.Top="50">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                    </Canvas>
+
+                    <!--#endregion-->
+
+                    <TextBox x:Name="TbxQuizName" Height="100" FontSize="72" Foreground="White" Width="400" Background="#4B0082" Margin="0,50,0,0" VerticalAlignment="Top" TextChanged="TbxQuizName_TextChanged"/>
+                    <TextBlock IsEnabled="False" Text="Quiz name here" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Foreground="White" Margin="0,60,0,0" x:Name="LblPlaceholder"/>
+                    <Button x:Name="BtnStartCreate" FontSize="48" Content="Start Creating" Width="350" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50" Style="{StaticResource ModernButton}" Click="BtnStartCreate_Click"/>
+
+                </Grid>
+
+            </Border>
+
+            <Grid x:Name="Screen9" Margin="0,100,0,0" >
+                <ProgressBar IsEnabled="False" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
+                    <ProgressBar.Background>
+                        <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">
+                            <GradientStop Color="#3D1A66" Offset="0.1"/>
+                            <GradientStop Color="#4B0082" Offset="0.2"/>
+                            <GradientStop Color="#6A0DAD" Offset="0.6"/>
+                            <GradientStop Color="#2D1B69" Offset="1.0"/>
+                        </RadialGradientBrush>
+                    </ProgressBar.Background>
+                </ProgressBar>
+                <TextBox x:Name="TbxQuestionCreate" Text="Type your question here" Height="200" FontSize="64" Foreground="White" Width="1920" Background="Transparent" Margin="0,50,0,0" VerticalAlignment="Top" TextWrapping="Wrap"/>
+                <UniformGrid  x:Name="SplAnswersCreate" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000" Height="600" Margin="0,125,0,0">
+
+                    <Border Height="250" Width="350" >
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6A0DAD" Offset="0.0"/>
+                                <GradientStop Color="#8A2BE2" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Grid>
+                            <TextBox x:Name="TbxAnswer1" Text="Type your answer here" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
+
+                            <Button x:Name="BtnAnswer1" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Border Height="250" Width="350" >
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6A0DAD" Offset="0.0"/>
+                                <GradientStop Color="#8A2BE2" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Grid>
+                            <TextBox x:Name="TbxAnswer2" Text="Type your answer here" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
+
+                            <Button x:Name="BtnAnswer2" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Border Height="250" Width="350" >
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6A0DAD" Offset="0.0"/>
+                                <GradientStop Color="#8A2BE2" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Grid>
+                            <TextBox x:Name="TbxAnswer3" Text="Type your answer here &#xD;&#xA;(optional)" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
+
+                            <Button x:Name="BtnAnswer3" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Border Height="250" Width="350" >
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6A0DAD" Offset="0.0"/>
+                                <GradientStop Color="#8A2BE2" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Grid>
+                            <TextBox x:Name="TbxAnswer4" Text="Type your answer here &#xD;&#xA;(optional)" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
+
+                            <Button x:Name="BtnAnswer4" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+
+                        </Grid>
+
+                    </Border>
+                    
+                </UniformGrid>
+                <Button x:Name="BtnNext" FontSize="48" Content="Next" Width="300" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25" Style="{StaticResource ModernButton}" Click="BtnNext_Click" ></Button>
+            </Grid>
 
             <!-- Enhanced Header -->
             <Grid Height="100" VerticalAlignment="Top">

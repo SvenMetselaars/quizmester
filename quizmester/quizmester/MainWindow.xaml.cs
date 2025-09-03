@@ -34,7 +34,7 @@ namespace quizmester
         /// </summary>
         int CurrentScreen = 1;
         // the max screen number... change this if you add more screens
-        int ScreenMax = 7;
+        int ScreenMax = 9;
 
         int PlayerId = 0;
 
@@ -393,11 +393,6 @@ namespace quizmester
             wrapPanel.Children.Add(CreateBorder);
         }
 
-        private void BtnCreate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void BtnView_Click(object sender, RoutedEventArgs e)
         {
             // find the button that was clicked
@@ -636,6 +631,7 @@ namespace quizmester
                 var button = new Button
                 {
                     Content = RowAnswers["Answer"].ToString(),
+                    FontSize = 32,
                     Width = 350,
                     Height = 250,
                     Margin = new Thickness(10),
@@ -743,6 +739,39 @@ namespace quizmester
                     BtnSkip.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+
+        private void TbxQuizName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LblPlaceholder.Visibility = string.IsNullOrEmpty(TbxQuizName.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void BtnStartCreate_Click(object sender, RoutedEventArgs e)
+        {       
+            if (TbxQuizName.Text != "")
+            {
+                // put the theme in the database with the account id of the player
+
+                lblname.Text = TbxQuizName.Text;
+                // update screen
+                CurrentScreen = 9;
+                ScreenCheck();
+            }
+            else MessageBox.Show("Fill in the name please");
+        }
+
+        private void BtnCreate_Click(object sender, RoutedEventArgs e)
+        {
+           // update screen
+            CurrentScreen = 8;
+            ScreenCheck();
+        }
+
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
