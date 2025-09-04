@@ -632,7 +632,8 @@
                         </RadialGradientBrush>
                     </ProgressBar.Background>
                 </ProgressBar>
-                <TextBox x:Name="TbxQuestionCreate" Text="Type your question here" Height="200" FontSize="64" Foreground="White" Width="1920" Background="Transparent" Margin="0,50,0,0" VerticalAlignment="Top" TextWrapping="Wrap"/>
+                <TextBox x:Name="TbxQuestionCreate" Height="200" FontSize="64" Foreground="White" Width="1920" Background="Transparent" Margin="0,50,0,0" VerticalAlignment="Top" TextWrapping="Wrap" TextChanged="TbxQuestionCreate_TextChanged"/>
+                <TextBlock  Text="Type your question here" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="64" Foreground="White" Margin="0,50,0,0" x:Name="LblPlaceholderQuestion" IsHitTestVisible="False" />
                 <UniformGrid  x:Name="SplAnswersCreate" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000" Height="600" Margin="0,125,0,0">
 
                     <Border Height="250" Width="350" >
@@ -644,26 +645,9 @@
                         </Border.Background>
 
                         <Grid>
-                            <TextBox x:Name="TbxAnswer1" Text="Type your answer here" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
-
-                            <Button x:Name="BtnAnswer1" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
-
-                        </Grid>
-
-                    </Border>
-
-                    <Border Height="250" Width="350" >
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="#6A0DAD" Offset="0.0"/>
-                                <GradientStop Color="#8A2BE2" Offset="1.0"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-
-                        <Grid>
-                            <TextBox x:Name="TbxAnswer2" Text="Type your answer here" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
-
-                            <Button x:Name="BtnAnswer2" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+                            <TextBox x:Name="TbxAnswer1" Foreground="White" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" TextWrapping="Wrap" TextChanged="TbxAnswer1_TextChanged"/>
+                            <TextBlock  Text="Type your Answer here" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="0,0,0,0" x:Name="LblPlaceholderAnswer1" IsHitTestVisible="False" />
+                            <Button x:Name="BtnAnswer1" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="WRONG" FontSize="20" Background="Red" Click="BtnAnswerCorect_Click"/>
 
                         </Grid>
 
@@ -678,9 +662,9 @@
                         </Border.Background>
 
                         <Grid>
-                            <TextBox x:Name="TbxAnswer3" Text="Type your answer here &#xD;&#xA;(optional)" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
-
-                            <Button x:Name="BtnAnswer3" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+                            <TextBox x:Name="TbxAnswer2" Foreground="White" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" TextWrapping="Wrap" TextChanged="TbxAnswer2_TextChanged"/>
+                            <TextBlock  Text="Type your Answer here" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="0,0,0,0" x:Name="LblPlaceholderAnswer2" IsHitTestVisible="False" />
+                            <Button x:Name="BtnAnswer2" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="WRONG" FontSize="20" Background="Red" Click="BtnAnswerCorect_Click"/>
 
                         </Grid>
 
@@ -695,9 +679,26 @@
                         </Border.Background>
 
                         <Grid>
-                            <TextBox x:Name="TbxAnswer4" Text="Type your answer here &#xD;&#xA;(optional)" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" ></TextBox>
+                            <TextBox x:Name="TbxAnswer3" Foreground="White" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" TextWrapping="Wrap" TextChanged="TbxAnswer3_TextChanged"/>
+                            <TextBlock  Text="Type your Answer here (Optional)" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="0,0,0,0" TextWrapping="Wrap" x:Name="LblPlaceholderAnswer3" IsHitTestVisible="False" />
+                            <Button x:Name="BtnAnswer3" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="WRONG" FontSize="20" Background="Red" Click="BtnAnswerCorect_Click"/>
 
-                            <Button x:Name="BtnAnswer4" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="wrong" FontSize="28" Background="Red"/>
+                        </Grid>
+
+                    </Border>
+
+                    <Border Height="250" Width="350" >
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6A0DAD" Offset="0.0"/>
+                                <GradientStop Color="#8A2BE2" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Grid>
+                            <TextBox x:Name="TbxAnswer4" Foreground="White" FontSize="32" Background="Transparent" Width="350" Height="150" VerticalAlignment="Top" TextWrapping="Wrap" TextChanged="TbxAnswer4_TextChanged"/>
+                            <TextBlock Text="Type your Answer here (Optional)" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Foreground="White" Margin="0,0,0,0" TextWrapping="Wrap" x:Name="LblPlaceholderAnswer4" IsHitTestVisible="False" />
+                            <Button x:Name="BtnAnswer4" Width="100" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,25" Content="WRONG" FontSize="20" Background="Red" Click="BtnAnswerCorect_Click"/>
 
                         </Grid>
 

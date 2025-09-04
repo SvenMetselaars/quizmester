@@ -771,7 +771,104 @@ namespace quizmester
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
+            bool CorrectFilled = BtnAnswer1.Background == Brushes.Green || BtnAnswer2.Background == Brushes.Green || BtnAnswer3.Background == Brushes.Green || BtnAnswer4.Background == Brushes.Green;
+            bool AllRequiredFilled = TbxQuestionCreate.Text != "" && TbxAnswer1.Text != "" && TbxAnswer2.Text != "";
+            bool RightFilled = (TbxAnswer3.Text == "" && BtnAnswer3.Background == Brushes.Green) || (TbxAnswer4.Text == "" && BtnAnswer4.Background == Brushes.Green);
+            if (CorrectFilled == true)
+            {
+                if (AllRequiredFilled == true)
+                {
+                    if (RightFilled == true)
+                    {
+                        // put it in the database
 
+                        ClearTextBox();
+                        ClearButtons();
+
+                        CurrentScreen = 9;
+                        ScreenCheck();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please make sure that all the wrong answers are marked as wrong");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please fill in all the non optional fields");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a correct answer");
+            }
+        }
+
+        private void ClearTextBox()
+        {
+            TbxAnswer1.Text = "";
+            TbxAnswer2.Text = "";
+            TbxAnswer3.Text = "";
+            TbxAnswer4.Text = "";
+            TbxQuestionCreate.Text = "";
+        }
+
+        private void TbxQuestionCreate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LblPlaceholderQuestion.Visibility = string.IsNullOrEmpty(TbxQuestionCreate.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void TbxAnswer1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LblPlaceholderAnswer1.Visibility = string.IsNullOrEmpty(TbxAnswer1.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void TbxAnswer2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LblPlaceholderAnswer2.Visibility = string.IsNullOrEmpty(TbxAnswer2.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void TbxAnswer3_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LblPlaceholderAnswer3.Visibility = string.IsNullOrEmpty(TbxAnswer3.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void TbxAnswer4_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LblPlaceholderAnswer4.Visibility = string.IsNullOrEmpty(TbxAnswer4.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void BtnAnswerCorect_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                ClearButtons();
+                button.Background = Brushes.Green;
+                button.Content = "CORRECT";
+            }
+        }
+
+        private void ClearButtons()
+        {
+            BtnAnswer1.Background = Brushes.Red;
+            BtnAnswer1.Content = "WRONG";
+            BtnAnswer2.Background = Brushes.Red;
+            BtnAnswer2.Content = "WRONG";
+            BtnAnswer3.Background = Brushes.Red;
+            BtnAnswer3.Content = "WRONG";
+            BtnAnswer4.Background = Brushes.Red;
+            BtnAnswer4.Content = "WRONG";
         }
     }
 }
