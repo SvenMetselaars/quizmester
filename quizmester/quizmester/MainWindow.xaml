@@ -614,7 +614,7 @@
                     <!--#endregion-->
 
                     <TextBox x:Name="TbxQuizName" Height="100" FontSize="72" Foreground="White" Width="400" Background="#4B0082" Margin="0,50,0,0" VerticalAlignment="Top" TextChanged="TbxQuizName_TextChanged"/>
-                    <TextBlock IsEnabled="False" Text="Quiz name here" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Foreground="White" Margin="0,60,0,0" x:Name="LblPlaceholder"/>
+                    <TextBlock IsEnabled="False" Text="Quiz name here" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Foreground="White" Margin="0,60,0,0" x:Name="LblPlaceholder" IsHitTestVisible="False" />
                     <Button x:Name="BtnStartCreate" FontSize="48" Content="Start Creating" Width="350" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50" Style="{StaticResource ModernButton}" Click="BtnStartCreate_Click"/>
 
                 </Grid>
