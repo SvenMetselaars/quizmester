@@ -426,7 +426,7 @@
                 </WrapPanel>
             </Grid>
 
-            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Collapsed">
+            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10">
                 <Border.Background>
                     <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
                         <GradientStop Color="#1A0033" Offset="0.0"/>
@@ -483,8 +483,12 @@
                     <StackPanel x:Name="SplAllHighScores" Orientation="Vertical" Width="500" Height="550" Margin="0,25,0,0" >
                         
                     </StackPanel>
-                    <Button x:Name="BtnStartQuiz" FontSize="48" Content="Start Quiz" Width="300" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50" Style="{StaticResource ModernButton}" Click="BtnStartQuiz_Click"/>
 
+                    <StackPanel x:Name="SplButtons" Orientation="Horizontal" Width="300" Height="80" Margin="0,0,0,50" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Button x:Name="BtnEditQuiz" FontSize="48" Content="Edit" Width="300" Height="80" Style="{StaticResource ModernButton}" Click="BtnEditQuiz_Click" Visibility="Collapsed"/>
+                        <Button x:Name="BtnStartQuiz" FontSize="48" Content="Start Quiz" Width="300" Height="80" HorizontalAlignment="Center" Style="{StaticResource ModernButton}" Click="BtnStartQuiz_Click"/>
+                    </StackPanel>
+                    
                 </Grid>
 
             </Border>
@@ -621,7 +625,7 @@
 
             </Border>
 
-            <Grid x:Name="Screen9" Margin="0,100,0,0" >
+            <Grid x:Name="Screen9" Margin="0,100,0,0" Visibility="Collapsed">
                 <ProgressBar IsEnabled="False" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
                     <ProgressBar.Background>
                         <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">

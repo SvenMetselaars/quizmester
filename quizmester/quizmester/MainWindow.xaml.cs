@@ -106,9 +106,14 @@ namespace quizmester
                     PlayerId = Convert.ToInt32(RowAcounts["Id"]);
                 }
             }
+            else
+            {
+                MessageBox.Show("Username or password is incorect");
+                Pbx_Password_L.Password = "";
+            }
 
-            // update screen
-            ScreenCheck();
+                // update screen
+                ScreenCheck();
         }
 
         private void BtnSignUp_Click(object sender, RoutedEventArgs e)
@@ -150,7 +155,16 @@ namespace quizmester
 
                         // if ammound of rows affected is more than 0, go to game choise screen
                         if (row > 0)
+                        {
                             CurrentScreen = 3;
+
+                            DataTable DataAcounts = Query.GetDataTable("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
+
+                            foreach (DataRow RowAcounts in DataAcounts.Rows)
+                            {
+                                PlayerId = Convert.ToInt32(RowAcounts["Id"]);
+                            }
+                        }
                         // if not , show error message
                         else
                             MessageBox.Show("Error signing up.");
@@ -165,13 +179,6 @@ namespace quizmester
                 else
                 {
                     MessageBox.Show("please fill in all the boxes");
-                }
-
-                DataTable DataAcounts = Query.GetDataTable("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
-
-                foreach (DataRow RowAcounts in DataAcounts.Rows)
-                {
-                    PlayerId = Convert.ToInt32(RowAcounts["Id"]);
                 }
             }
             // when the try block fails
@@ -427,8 +434,29 @@ namespace quizmester
                         {
                             // set the label to the quiz creator
                             textBlock.Text = "Created by: " + rowAcounts["Username"].ToString();
+
+                            if (PlayerId == Convert.ToInt32(rowThemes["Account_Id"]))
+                            {
+                                SplButtons.Width = 600;
+                                BtnEditQuiz.Visibility = Visibility.Visible;
+                            }
                         }
                     }
+
+                    // get the username from the database from the account id in the quiz
+                    DataTable DataAcountsAdmin = Query.GetDataTable("SELECT Type FROM Accounts WHERE Id = '" + rowThemes["Account_Id"] + "' ;");
+
+                    // go trough all the rows (should only be one)
+                    foreach (DataRow rowAcounts in DataAcountsAdmin.Rows)
+                    {
+                        if (rowAcounts["Type"].ToString() == "Admin")
+                        {
+                            SplButtons.Width = 600;
+                            BtnEditQuiz.Visibility = Visibility.Visible;
+                        }
+                    }
+
+                   
 
                     // get the 10 high scores for this quiz. if there are less than 10,
                     // it will return all of them,
@@ -752,7 +780,7 @@ namespace quizmester
         {       
             if (TbxQuizName.Text != "")
             {
-                // put the theme in the database with the account id of the player
+                Query.ExecuteQueryNonQuery("INSERT INTO Themes (Account_Id, Theme) VALUES ('" + PlayerId + "','" + TbxQuizName.Text + "');");
 
                 lblname.Text = TbxQuizName.Text;
                 // update screen
@@ -780,17 +808,50 @@ namespace quizmester
                 {
                     if (RightFilled == true)
                     {
-                        // put it in the database
+                        MessageBox.Show("Please make sure that all the wrong answers are marked as wrong");
+                    }
+                    else
+                    {
+
+                        DataTable DataThemes = Query.GetDataTable("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
+
+                        foreach (DataRow RowThemes in DataThemes.Rows)
+                        {
+                            CurrentQuizId = Convert.ToInt32(RowThemes["Id"]);
+                        }
+
+                        Query.ExecuteQueryNonQuery("INSERT INTO Questions (Theme_Id, Question) VALUES ('" + CurrentQuizId + "','" + TbxQuestionCreate.Text + "');");
+
+                        DataTable DataQuestions = Query.GetDataTable("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
+
+                        var currentQuestionsId = 0;
+                        foreach (DataRow RowQuestions in DataQuestions.Rows)
+                        {
+                            currentQuestionsId = Convert.ToInt32(RowQuestions["Id"]);
+                        }
+
+                        if (currentQuestionsId != 0)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
+                                var button = this.FindName("BtnAnswer" + i) as Button;
+
+                                if (questionbox != null || button != null || questionbox.Text != "")
+                                {
+                                    bool Correct = button.Background == Brushes.Green;
+
+                                    Query.ExecuteQueryNonQuery("INSERT INTO Answers (Question_Id, Answer, Correct) VALUES ('" + currentQuestionsId + "','" + questionbox.Text + "','" + Correct + "');");
+                                }
+                            }
+                        }
+
 
                         ClearTextBox();
                         ClearButtons();
 
                         CurrentScreen = 9;
                         ScreenCheck();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please make sure that all the wrong answers are marked as wrong");
                     }
                 }
                 else
@@ -869,6 +930,11 @@ namespace quizmester
             BtnAnswer3.Content = "WRONG";
             BtnAnswer4.Background = Brushes.Red;
             BtnAnswer4.Content = "WRONG";
+        }
+
+        private void BtnEditQuiz_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
