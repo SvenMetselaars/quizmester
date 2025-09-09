@@ -21,19 +21,21 @@ namespace quizmester
         /// </summary>
         /// <param name="query">the command you want to have executed</param>
         /// <returns></returns>
-        public int ExecuteScalar(string query)
+        public object ExecuteScalar(string query, params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
+                conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    return (int)cmd.ExecuteScalar();
+                    if (parameters != null)
+                    {
+                        cmd.Parameters.AddRange(parameters);
+                    }
+
+                    object result = cmd.ExecuteScalar();
+                    return result;
                 }
             }
         }

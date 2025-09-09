@@ -60,6 +60,8 @@ namespace quizmester
 
         // this is the time you have to wait on the score screen in seconds
         int CountDownScoreScreen = -1;
+        
+        bool EditingQuiz = false;
 
         bool GameStarted = false;
 
@@ -95,19 +97,16 @@ namespace quizmester
             string L_Password = Pbx_Password_L.Password;
 
             // SQL query with parameters
-            int count = Query.ExecuteScalar("SELECT COUNT(*) FROM Accounts WHERE Username ='" + L_Username + "'AND Password ='" + L_Password + "';");
+            var count = Query.ExecuteScalar("SELECT COUNT(*) FROM Accounts WHERE Username ='" + L_Username + "'AND Password ='" + L_Password + "';");
 
-            if (count == 1)
+            if (count.ToString() == "1")
             {
                 // go to game choise screen
                 CurrentScreen = 3;
 
-                DataTable DataAcounts = Query.GetDataTable("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
+                var Account = Query.ExecuteScalar("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
+                PlayerId = Convert.ToInt32(Account);
 
-                foreach (DataRow RowAcounts in DataAcounts.Rows)
-                {
-                    PlayerId = Convert.ToInt32(RowAcounts["Id"]);
-                }
             }
             else
             {
@@ -138,10 +137,10 @@ namespace quizmester
                         Pbx_Password2_S.Password = "";
 
                         // check if username already exists
-                        int count = Query.ExecuteScalar("SELECT COUNT(*) FROM Accounts WHERE Username ='" + L_Username + "';");
+                        var count = Query.ExecuteScalar("SELECT COUNT(*) FROM Accounts WHERE Username ='" + L_Username + "';");
 
                         // if username exists, show message and return
-                        if (count == 1)
+                        if (count.ToString() == "1")
                         {
                             MessageBox.Show("Username already exists");
                             return;
@@ -161,12 +160,8 @@ namespace quizmester
                         {
                             CurrentScreen = 3;
 
-                            DataTable DataAcounts = Query.GetDataTable("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
-
-                            foreach (DataRow RowAcounts in DataAcounts.Rows)
-                            {
-                                PlayerId = Convert.ToInt32(RowAcounts["Id"]);
-                            }
+                            var Account = Query.ExecuteScalar("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
+                            PlayerId = Convert.ToInt32(Account);
                         }
                         // if not , show error message
                         else
@@ -633,14 +628,9 @@ namespace quizmester
 
             if (CurrentQuizId != 0)
             {
-                // get the quiz id from the database from the quiz name
-                DataTable DataThemes = Query.GetDataTable("SELECT Theme FROM Themes WHERE Id = '" + CurrentQuizId + "' ;");
-
-                // go trough all the rows (should only be one)
-                foreach (DataRow rowThemes in DataThemes.Rows)
-                {
-                    lblname.Text = rowThemes["Theme"].ToString();
-                }
+                // get the quiz name from the database from the id in the button's Tag property
+                var Theme = Query.ExecuteScalar("SELECT Theme FROM Themes WHERE Id = '" + CurrentQuizId + "' ;");
+                lblname.Text = Theme.ToString();
 
                 // get the question ids from the database from the quiz id
                 DataTable DataQuestions = Query.GetDataTable("SELECT Id FROM Questions WHERE Theme_Id = '" + CurrentQuizId + "' ;");
@@ -656,13 +646,10 @@ namespace quizmester
 
         private void ShowQuestion()
         {
-            DataTable DataQuestions = Query.GetDataTable("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
-            DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + Question_ids[0] + "' ORDER BY NEWID();");
+            var Question = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
+            LblQuestion.Text = Question.ToString();
 
-            foreach (DataRow RowQuestions in DataQuestions.Rows)
-            {
-                LblQuestion.Text = RowQuestions["Question"].ToString();
-            }
+            DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + Question_ids[0] + "' ORDER BY NEWID();");
 
             var uniformGrid = this.FindName("SplAnswers") as UniformGrid;
             uniformGrid.Children.Clear();
@@ -790,9 +777,41 @@ namespace quizmester
         }
 
         private void BtnStartCreate_Click(object sender, RoutedEventArgs e)
-        {       
+        {     
             if (TbxQuizName.Text != "")
             {
+                var count = Query.ExecuteScalar("SELECT COUNT(*) FROM Themes WHERE Theme ='" + TbxQuizName.Text + "';");
+
+                // if username exists, show message and return
+                if (count.ToString() == "1" && EditingQuiz != true)
+                {
+                    MessageBox.Show("Theme already exists");
+                    return;
+                }
+                else if (EditingQuiz == true)
+                {
+                    var Theme = Query.ExecuteScalar("SELECT Theme FROM Themes WHERE Id ='" + CurrentQuizId + "';");
+
+                    if (Theme.ToString() == TbxQuizName.Text.ToString())
+                    {
+                        lblname.Text = TbxQuizName.Text;
+                        // update screen
+                        CurrentScreen = 9;
+                        ScreenCheck();
+                        return;
+                    }
+                    else
+                    {
+                        Query.ExecuteQueryNonQuery("UPDATE Themes SET Theme = '" + TbxQuizName.Text + "' WHERE Id = '" + CurrentQuizId + "';");
+
+                        lblname.Text = TbxQuizName.Text;
+                        // update screen
+                        CurrentScreen = 9;
+                        ScreenCheck();
+                        return;
+                    }
+                }
+
                 Query.ExecuteQueryNonQuery("INSERT INTO Themes (Account_Id, Theme) VALUES ('" + PlayerId + "','" + TbxQuizName.Text + "');");
 
                 lblname.Text = TbxQuizName.Text;
@@ -826,22 +845,13 @@ namespace quizmester
                     else
                     {
 
-                        DataTable DataThemes = Query.GetDataTable("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
-
-                        foreach (DataRow RowThemes in DataThemes.Rows)
-                        {
-                            CurrentQuizId = Convert.ToInt32(RowThemes["Id"]);
-                        }
+                        var Theme = Query.ExecuteScalar("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
+                        CurrentQuizId = Convert.ToInt32(Theme);
 
                         Query.ExecuteQueryNonQuery("INSERT INTO Questions (Theme_Id, Question) VALUES ('" + CurrentQuizId + "','" + TbxQuestionCreate.Text + "');");
 
-                        DataTable DataQuestions = Query.GetDataTable("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
-
-                        var currentQuestionsId = 0;
-                        foreach (DataRow RowQuestions in DataQuestions.Rows)
-                        {
-                            currentQuestionsId = Convert.ToInt32(RowQuestions["Id"]);
-                        }
+                        var Question = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
+                        int currentQuestionsId = Convert.ToInt32(Question);
 
                         if (currentQuestionsId != 0)
                         {
@@ -947,10 +957,11 @@ namespace quizmester
 
         private void BtnEditQuiz_Click(object sender, RoutedEventArgs e)
         {
-            DataTable DataThemes = Query.GetDataTable("SELECT Theme FROM Themes WHERE Id = '" + CurrentQuizId + "' ;");
+            var Theme = Query.ExecuteScalar("SELECT Theme FROM Themes WHERE Id = '" + CurrentQuizId + "' ;");
 
-            TbxQuestionCreate.Text = DataThemes.Rows[0]["Theme"].ToString();
+            TbxQuizName.Text = Theme.ToString();
 
+            EditingQuiz = true;
 
             CurrentScreen = 8;
             ScreenCheck();
@@ -974,9 +985,7 @@ namespace quizmester
                     break;
             }
 
-
-
-
+            EditingQuiz = false;
             GameStarted = false;
 
             CurrentScreen = 3;
