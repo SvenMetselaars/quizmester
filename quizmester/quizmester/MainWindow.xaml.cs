@@ -30,6 +30,9 @@ namespace quizmester
         /// 4 = view quiz info screen (Screen4)
         /// 5 = coundown screen (Screen5)
         /// 6 = view question screen (Screen6)
+        /// 7 = score screen (Screen7)
+        /// 8 = create quiz start screen (Screen8)
+        /// 9 = create quiz question screen (Screen9)
         /// default screen is login screen
         /// </summary>
         int CurrentScreen = 1;
@@ -208,19 +211,24 @@ namespace quizmester
                         screen.Visibility = Visibility.Visible;
 
                         // if the screen is the game choise screen, make the window maximized and hide the startup grid
-                        if (i >= 3) 
-                        { 
-                            Main.WindowState = WindowState.Maximized; 
-                            StartupGrid.Visibility = Visibility.Collapsed; 
+                        if (i >= 3)
+                        {
+                            Main.WindowState = WindowState.Maximized;
+                            StartupGrid.Visibility = Visibility.Collapsed;
                             MainGrid.Visibility = Visibility.Visible;
 
-                            if (i >= 3 && i < 5) ShowQuizes();
+                            if (i >= 3 && i < 5)
+                            {
+                                ShowQuizes();
+                                BtnBack.Visibility = Visibility.Collapsed;
+                            }
+                            else BtnBack.Visibility = Visibility.Visible; 
                         }
                         // if the screen is not the game choise screen, make the window normal and show the startup grid
-                        else 
-                        { 
-                            Main.WindowState = WindowState.Normal; 
-                            StartupGrid.Visibility = Visibility.Visible; 
+                        else
+                        {
+                            Main.WindowState = WindowState.Normal;
+                            StartupGrid.Visibility = Visibility.Visible;
                             MainGrid.Visibility = Visibility.Collapsed;
                             this.Height = 550; this.Width = 900;
                         }
@@ -424,6 +432,11 @@ namespace quizmester
 
                     // set the label to the quiz creator
                     textBlock = this.FindName("LblQuizCreator") as TextBlock;
+
+                    textBlock.Text = "Created by: Anonymous";
+                    SplButtons.Width = 300;
+                    BtnEditQuiz.Visibility = Visibility.Collapsed;
+
                     if (textBlock != null && rowThemes["Account_Id"] != null)
                     {
                         // get the username from the database from the account id in the quiz
@@ -444,7 +457,7 @@ namespace quizmester
                     }
 
                     // get the username from the database from the account id in the quiz
-                    DataTable DataAcountsAdmin = Query.GetDataTable("SELECT Type FROM Accounts WHERE Id = '" + rowThemes["Account_Id"] + "' ;");
+                    DataTable DataAcountsAdmin = Query.GetDataTable("SELECT Type FROM Accounts WHERE Id = '" + PlayerId + "' ;");
 
                     // go trough all the rows (should only be one)
                     foreach (DataRow rowAcounts in DataAcountsAdmin.Rows)
@@ -792,7 +805,7 @@ namespace quizmester
 
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
-           // update screen
+            // update screen
             CurrentScreen = 8;
             ScreenCheck();
         }
@@ -934,7 +947,40 @@ namespace quizmester
 
         private void BtnEditQuiz_Click(object sender, RoutedEventArgs e)
         {
+            DataTable DataThemes = Query.GetDataTable("SELECT Theme FROM Themes WHERE Id = '" + CurrentQuizId + "' ;");
 
+            TbxQuestionCreate.Text = DataThemes.Rows[0]["Theme"].ToString();
+
+
+            CurrentScreen = 8;
+            ScreenCheck();
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            switch (CurrentScreen)
+            {
+                case 5: // CountDown screen
+                case 6: // Question screen
+                    try
+                    {
+                        timer.Stop();
+                        if (NewTimer != null) { NewTimer.Stop(); }
+                        GameStarted = false;
+                        CurrentScreen = 3; // go back to the game choice screen
+                    }
+                    catch { }
+
+                    break;
+            }
+
+
+
+
+            GameStarted = false;
+
+            CurrentScreen = 3;
+            ScreenCheck();
         }
     }
 }
