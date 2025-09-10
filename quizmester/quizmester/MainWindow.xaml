@@ -426,7 +426,7 @@
                 </WrapPanel>
             </Grid>
 
-            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10">
+            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Collapsed">
                 <Border.Background>
                     <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
                         <GradientStop Color="#1A0033" Offset="0.0"/>
@@ -625,7 +625,7 @@
 
             </Border>
 
-            <Grid x:Name="Screen9" Margin="0,100,0,0" Visibility="Collapsed">
+            <Grid x:Name="Screen9" Margin="0,100,0,0">
                 <ProgressBar IsEnabled="False" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
                     <ProgressBar.Background>
                         <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">

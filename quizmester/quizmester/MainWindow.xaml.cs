@@ -843,7 +843,32 @@ namespace quizmester
 
         private void ShowFilledin()
         {
-            
+            var Question = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
+            TbxQuestionCreate.Text = Question.ToString();
+
+            DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + Question_ids[0] + "';");
+            int i = 1;
+            foreach (DataRow RowAnswers in DataAnswers_Id.Rows)
+            {
+                var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
+                var button = this.FindName("BtnAnswer" + i) as Button;
+                if (questionbox != null || button != null || questionbox.Text != "")
+                {
+                    questionbox.Text = RowAnswers["Answer"].ToString();
+                    bool Correct = Convert.ToBoolean(RowAnswers["Correct"]);
+                    if (Correct == true)
+                    {
+                        button.Background = Brushes.Green;
+                        button.Content = "CORRECT";
+                    }
+                    else
+                    {
+                        button.Background = Brushes.Red;
+                        button.Content = "WRONG";
+                    }
+                }
+                i++;
+            }
         }
 
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
@@ -870,14 +895,35 @@ namespace quizmester
                     }
                     else
                     {
+                        int currentQuestionsId = 0;
+                        if (EditingQuiz == false)
+                        {
+                            var Theme = Query.ExecuteScalar("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
+                            CurrentQuizId = Convert.ToInt32(Theme);
 
-                        var Theme = Query.ExecuteScalar("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
-                        CurrentQuizId = Convert.ToInt32(Theme);
+                            Query.ExecuteQueryNonQuery("INSERT INTO Questions (Theme_Id, Question) VALUES ('" + CurrentQuizId + "','" + TbxQuestionCreate.Text + "');");
 
-                        Query.ExecuteQueryNonQuery("INSERT INTO Questions (Theme_Id, Question) VALUES ('" + CurrentQuizId + "','" + TbxQuestionCreate.Text + "');");
+                            var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
+                            currentQuestionsId = Convert.ToInt32(Questionid);
+                        }
+                        else if (EditingQuiz == true)
+                        {
+                            // use the question id in the question ids list to get the old question
 
-                        var Question = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
-                        int currentQuestionsId = Convert.ToInt32(Question);
+                            var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
+                            currentQuestionsId = Convert.ToInt32(Questionid);
+
+                            var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Question = '" + currentQuestionsId + "' ;");
+                            if(LastQuestion.ToString() != TbxQuestionCreate.Text)
+                            {
+                                Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + currentQuestionsId + "';");
+                            }
+                        }
+
+                        if(EditingQuiz == true)
+                        {
+                            // maybe get the ids from the answers here? 
+                        }
 
                         if (currentQuestionsId != 0)
                         {
@@ -886,11 +932,30 @@ namespace quizmester
                                 var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
                                 var button = this.FindName("BtnAnswer" + i) as Button;
 
-                                if (questionbox != null || button != null || questionbox.Text != "")
+                                if (questionbox != null && button != null )
                                 {
-                                    bool Correct = button.Background == Brushes.Green;
+                                    if(questionbox.Text != "")
+                                    {
+                                        if (EditingQuiz == false)
+                                        {
+                                            bool Correct = button.Background == Brushes.Green;
 
-                                    Query.ExecuteQueryNonQuery("INSERT INTO Answers (Question_Id, Answer, Correct) VALUES ('" + currentQuestionsId + "','" + questionbox.Text + "','" + Correct + "');");
+                                            Query.ExecuteQueryNonQuery("INSERT INTO Answers (Question_Id, Answer, Correct) VALUES ('" + currentQuestionsId + "','" + questionbox.Text + "','" + Correct + "');");
+                                        }
+                                        else if (EditingQuiz == true)
+                                        {
+                                            // use something like this but idk what
+                                            // this is still for the question make it for the answers
+                                            var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
+                                            currentQuestionsId = Convert.ToInt32(Questionid);
+
+                                            var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Question = '" + currentQuestionsId + "' ;");
+                                            if (LastQuestion.ToString() != TbxQuestionCreate.Text)
+                                            {
+                                                Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + currentQuestionsId + "';");
+                                            }
+                                        }
+                                    }                                   
                                 }
                             }
                         }
