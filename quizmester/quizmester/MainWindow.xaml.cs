@@ -162,6 +162,9 @@ namespace quizmester
 
                             var Account = Query.ExecuteScalar("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
                             PlayerId = Convert.ToInt32(Account);
+
+                            Tbx_Username_L.Text = L_Username;
+                            Pbx_Password_L.Password = L_Password;
                         }
                         // if not , show error message
                         else
@@ -211,13 +214,12 @@ namespace quizmester
                             Main.WindowState = WindowState.Maximized;
                             StartupGrid.Visibility = Visibility.Collapsed;
                             MainGrid.Visibility = Visibility.Visible;
+                            BtnBack.Visibility = Visibility.Visible;
 
                             if (i >= 3 && i < 5)
                             {
                                 ShowQuizes();
-                                BtnBack.Visibility = Visibility.Collapsed;
-                            }
-                            else BtnBack.Visibility = Visibility.Visible; 
+                            } 
                         }
                         // if the screen is not the game choise screen, make the window normal and show the startup grid
                         else
@@ -758,6 +760,14 @@ namespace quizmester
         {
             if(SkipAmount > 0)
             {
+                if (Question_ids.Count == 0)
+                {
+                    // time to answer the question is up
+                    timer.Stop();
+                    UpdateScoreScreen();
+                    return;
+                }
+
                 SkipAmount--;
 
                 ShowQuestion();
@@ -792,9 +802,18 @@ namespace quizmester
                 {
                     var Theme = Query.ExecuteScalar("SELECT Theme FROM Themes WHERE Id ='" + CurrentQuizId + "';");
 
+                    var questions = Query.GetDataTable("SELECT Id FROM Questions WHERE Theme_Id = '" + CurrentQuizId + "' ;");
+                    foreach (DataRow row in questions.Rows)
+                    { 
+                        Question_ids.Add(row["Id"].ToString());
+                    }
+
                     if (Theme.ToString() == TbxQuizName.Text.ToString())
                     {
                         lblname.Text = TbxQuizName.Text;
+
+                        ShowFilledin();
+
                         // update screen
                         CurrentScreen = 9;
                         ScreenCheck();
@@ -822,8 +841,15 @@ namespace quizmester
             else MessageBox.Show("Fill in the name please");
         }
 
+        private void ShowFilledin()
+        {
+            
+        }
+
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
+            TbxQuizName.Text = "";
+
             // update screen
             CurrentScreen = 8;
             ScreenCheck();
@@ -971,6 +997,11 @@ namespace quizmester
         {
             switch (CurrentScreen)
             {
+                case 3: // Game choice screen
+                case 4: // View screen
+                    CurrentScreen = 1; // go back to the main screen
+                    break;
+
                 case 5: // CountDown screen
                 case 6: // Question screen
                     try
@@ -981,14 +1012,18 @@ namespace quizmester
                         CurrentScreen = 3; // go back to the game choice screen
                     }
                     catch { }
-
+                    break;
+                case 7: // Score screen
+                case 8: // Create quiz screen
+                case 9: // Create question screen
+                    CurrentScreen = 3; // go back to the game choice screen
                     break;
             }
 
+            Question_ids.Clear();
             EditingQuiz = false;
             GameStarted = false;
 
-            CurrentScreen = 3;
             ScreenCheck();
         }
     }
