@@ -808,11 +808,11 @@ namespace quizmester
                         Question_ids.Add(row["Id"].ToString());
                     }
 
+                    ShowFilledin();
+
                     if (Theme.ToString() == TbxQuizName.Text.ToString())
                     {
                         lblname.Text = TbxQuizName.Text;
-
-                        ShowFilledin();
 
                         // update screen
                         CurrentScreen = 9;
@@ -843,32 +843,36 @@ namespace quizmester
 
         private void ShowFilledin()
         {
-            var Question = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
-            TbxQuestionCreate.Text = Question.ToString();
-
-            DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + Question_ids[0] + "';");
-            int i = 1;
-            foreach (DataRow RowAnswers in DataAnswers_Id.Rows)
+            if(Question_ids.Count >= 1)
             {
-                var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
-                var button = this.FindName("BtnAnswer" + i) as Button;
-                if (questionbox != null || button != null || questionbox.Text != "")
+                var Question = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
+                TbxQuestionCreate.Text = Question.ToString();
+
+                DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + Question_ids[0] + "';");
+                int i = 1;
+                foreach (DataRow RowAnswers in DataAnswers_Id.Rows)
                 {
-                    questionbox.Text = RowAnswers["Answer"].ToString();
-                    bool Correct = Convert.ToBoolean(RowAnswers["Correct"]);
-                    if (Correct == true)
+                    var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
+                    var button = this.FindName("BtnAnswer" + i) as Button;
+                    if (questionbox != null || button != null || questionbox.Text != "")
                     {
-                        button.Background = Brushes.Green;
-                        button.Content = "CORRECT";
+                        questionbox.Text = RowAnswers["Answer"].ToString();
+                        bool Correct = Convert.ToBoolean(RowAnswers["Correct"]);
+                        if (Correct == true)
+                        {
+                            button.Background = Brushes.Green;
+                            button.Content = "CORRECT";
+                        }
+                        else
+                        {
+                            button.Background = Brushes.Red;
+                            button.Content = "WRONG";
+                        }
                     }
-                    else
-                    {
-                        button.Background = Brushes.Red;
-                        button.Content = "WRONG";
-                    }
+                    i++;
                 }
-                i++;
             }
+
         }
 
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
@@ -882,6 +886,8 @@ namespace quizmester
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
+            List<string> Awnser_ids = new List<string>();
+
             bool CorrectFilled = BtnAnswer1.Background == Brushes.Green || BtnAnswer2.Background == Brushes.Green || BtnAnswer3.Background == Brushes.Green || BtnAnswer4.Background == Brushes.Green;
             bool AllRequiredFilled = TbxQuestionCreate.Text != "" && TbxAnswer1.Text != "" && TbxAnswer2.Text != "";
             bool RightFilled = (TbxAnswer3.Text == "" && BtnAnswer3.Background == Brushes.Green) || (TbxAnswer4.Text == "" && BtnAnswer4.Background == Brushes.Green);
@@ -908,26 +914,25 @@ namespace quizmester
                         }
                         else if (EditingQuiz == true)
                         {
-                            // use the question id in the question ids list to get the old question
+                            var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
 
-                            var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
-                            currentQuestionsId = Convert.ToInt32(Questionid);
-
-                            var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Question = '" + currentQuestionsId + "' ;");
                             if(LastQuestion.ToString() != TbxQuestionCreate.Text)
                             {
-                                Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + currentQuestionsId + "';");
+                                Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + Question_ids[0] + "';");
                             }
-                        }
 
-                        if(EditingQuiz == true)
-                        {
-                            // maybe get the ids from the answers here? 
+                            DataTable awnsers_id = Query.GetDataTable("SELECT Id FROM Answers WHERE Question_Id = '" + Question_ids[0] + "' ;");
+                            foreach (DataRow row in awnsers_id.Rows)
+                            {
+                                Awnser_ids.Add(row["Id"].ToString());
+                            }
+
+                            currentQuestionsId = Convert.ToInt32(Question_ids[0]);
                         }
 
                         if (currentQuestionsId != 0)
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 1; i < 5; i++)
                             {
                                 var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
                                 var button = this.FindName("BtnAnswer" + i) as Button;
@@ -936,33 +941,44 @@ namespace quizmester
                                 {
                                     if(questionbox.Text != "")
                                     {
-                                        if (EditingQuiz == false)
+                                        if (EditingQuiz == false || Awnser_ids.Count == 0)
                                         {
                                             bool Correct = button.Background == Brushes.Green;
 
                                             Query.ExecuteQueryNonQuery("INSERT INTO Answers (Question_Id, Answer, Correct) VALUES ('" + currentQuestionsId + "','" + questionbox.Text + "','" + Correct + "');");
                                         }
-                                        else if (EditingQuiz == true)
+                                        else if (EditingQuiz == true && Awnser_ids.Count >= 1)
                                         {
-                                            // use something like this but idk what
-                                            // this is still for the question make it for the answers
-                                            var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
-                                            currentQuestionsId = Convert.ToInt32(Questionid);
-
-                                            var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Question = '" + currentQuestionsId + "' ;");
-                                            if (LastQuestion.ToString() != TbxQuestionCreate.Text)
+                                            DataTable LastAnswer = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Id = '" + Awnser_ids[0] + "' ;");
+                                            foreach (DataRow row in LastAnswer.Rows)
                                             {
-                                                Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + currentQuestionsId + "';");
+                                                if (row["Answer"].ToString() != questionbox.Text)
+                                                {
+                                                    Query.ExecuteQueryNonQuery("UPDATE Answers SET Anwser = '" + TbxQuizName.Text + "' WHERE Id = '" + Awnser_ids[0] + "';");
+                                                }
+
+                                                if (row["Correct"].ToString() == "True" && button.Background == Brushes.Red)
+                                                {
+                                                    Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = False WHERE Id = '" + Awnser_ids[0] + "';");
+                                                }
+                                                else if (row["Correct"].ToString() == "False" && button.Background == Brushes.Green)
+                                                {
+                                                    Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = True WHERE Id = '" + Awnser_ids[0] + "';");
+                                                }
                                             }
+                                            Awnser_ids.RemoveAt(0);
                                         }
                                     }                                   
                                 }
                             }
                         }
 
+                        if (EditingQuiz == true && Question_ids.Count >= 1) Question_ids.RemoveAt(0);
 
                         ClearTextBox();
                         ClearButtons();
+
+                        ShowFilledin();
 
                         CurrentScreen = 9;
                         ScreenCheck();
