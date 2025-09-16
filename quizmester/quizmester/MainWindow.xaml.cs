@@ -872,7 +872,10 @@ namespace quizmester
                     i++;
                 }
             }
-
+            else
+            {
+                EditingQuiz = false;
+            }
         }
 
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
@@ -889,110 +892,143 @@ namespace quizmester
             List<string> Awnser_ids = new List<string>();
 
             bool CorrectFilled = BtnAnswer1.Background == Brushes.Green || BtnAnswer2.Background == Brushes.Green || BtnAnswer3.Background == Brushes.Green || BtnAnswer4.Background == Brushes.Green;
-            bool AllRequiredFilled = TbxQuestionCreate.Text != "" && TbxAnswer1.Text != "" && TbxAnswer2.Text != "";
+            bool AllRequiredFilled = TbxAnswer1.Text != "" && TbxAnswer2.Text != "";
             bool RightFilled = (TbxAnswer3.Text == "" && BtnAnswer3.Background == Brushes.Green) || (TbxAnswer4.Text == "" && BtnAnswer4.Background == Brushes.Green);
-            if (CorrectFilled == true)
+            if (TbxQuestionCreate.Text != "")
             {
-                if (AllRequiredFilled == true)
+                if (CorrectFilled == true)
                 {
-                    if (RightFilled == true)
+                    if (AllRequiredFilled == true)
                     {
-                        MessageBox.Show("Please make sure that all the wrong answers are marked as wrong");
+                        if (RightFilled == true)
+                        {
+                            MessageBox.Show("Please make sure that all the wrong answers are marked as wrong");
+                        }
+                        else
+                        {
+                            int currentQuestionsId = 0;
+                            if (EditingQuiz == false)
+                            {
+                                var Theme = Query.ExecuteScalar("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
+                                CurrentQuizId = Convert.ToInt32(Theme);
+
+                                Query.ExecuteQueryNonQuery("INSERT INTO Questions (Theme_Id, Question) VALUES ('" + CurrentQuizId + "','" + TbxQuestionCreate.Text + "');");
+
+                                var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
+                                currentQuestionsId = Convert.ToInt32(Questionid);
+                            }
+                            else if (EditingQuiz == true)
+                            {
+                                var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
+
+                                if (LastQuestion.ToString() != TbxQuestionCreate.Text)
+                                {
+                                    Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + Question_ids[0] + "';");
+                                }
+
+                                DataTable awnsers_id = Query.GetDataTable("SELECT Id FROM Answers WHERE Question_Id = '" + Question_ids[0] + "' ;");
+                                foreach (DataRow row in awnsers_id.Rows)
+                                {
+                                    Awnser_ids.Add(row["Id"].ToString());
+                                }
+
+                                currentQuestionsId = Convert.ToInt32(Question_ids[0]);
+                            }
+
+                            if (currentQuestionsId != 0)
+                            {
+                                for (int i = 1; i < 5; i++)
+                                {
+                                    var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
+                                    var button = this.FindName("BtnAnswer" + i) as Button;
+
+                                    if (questionbox != null && button != null)
+                                    {
+                                        if (questionbox.Text != "")
+                                        {
+                                            if (EditingQuiz == false || Awnser_ids.Count == 0)
+                                            {
+                                                bool Correct = button.Background == Brushes.Green;
+
+                                                Query.ExecuteQueryNonQuery("INSERT INTO Answers (Question_Id, Answer, Correct) VALUES ('" + currentQuestionsId + "','" + questionbox.Text + "','" + Correct + "');");
+                                            }
+                                            else if (EditingQuiz == true && Awnser_ids.Count >= 1)
+                                            {
+                                                DataTable LastAnswer = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Id = '" + Awnser_ids[0] + "' ;");
+                                                foreach (DataRow row in LastAnswer.Rows)
+                                                {
+                                                    if (row["Answer"].ToString() != questionbox.Text)
+                                                    {
+                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Anwser = '" + TbxQuizName.Text + "' WHERE Id = '" + Awnser_ids[0] + "';");
+                                                    }
+
+                                                    if (row["Correct"].ToString() == "True" && button.Background == Brushes.Red)
+                                                    {
+                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = False WHERE Id = '" + Awnser_ids[0] + "';");
+                                                    }
+                                                    else if (row["Correct"].ToString() == "False" && button.Background == Brushes.Green)
+                                                    {
+                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = True WHERE Id = '" + Awnser_ids[0] + "';");
+                                                    }
+                                                }
+                                                Awnser_ids.RemoveAt(0);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            NextQuestion();
+                        }
                     }
                     else
                     {
-                        int currentQuestionsId = 0;
-                        if (EditingQuiz == false)
-                        {
-                            var Theme = Query.ExecuteScalar("SELECT Id FROM Themes WHERE Theme = '" + lblname.Text + "' ;");
-                            CurrentQuizId = Convert.ToInt32(Theme);
-
-                            Query.ExecuteQueryNonQuery("INSERT INTO Questions (Theme_Id, Question) VALUES ('" + CurrentQuizId + "','" + TbxQuestionCreate.Text + "');");
-
-                            var Questionid = Query.ExecuteScalar("SELECT Id FROM Questions WHERE Question = '" + TbxQuestionCreate.Text + "' ;");
-                            currentQuestionsId = Convert.ToInt32(Questionid);
-                        }
-                        else if (EditingQuiz == true)
-                        {
-                            var LastQuestion = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
-
-                            if(LastQuestion.ToString() != TbxQuestionCreate.Text)
-                            {
-                                Query.ExecuteQueryNonQuery("UPDATE Questions SET Question = '" + TbxQuizName.Text + "' WHERE Id = '" + Question_ids[0] + "';");
-                            }
-
-                            DataTable awnsers_id = Query.GetDataTable("SELECT Id FROM Answers WHERE Question_Id = '" + Question_ids[0] + "' ;");
-                            foreach (DataRow row in awnsers_id.Rows)
-                            {
-                                Awnser_ids.Add(row["Id"].ToString());
-                            }
-
-                            currentQuestionsId = Convert.ToInt32(Question_ids[0]);
-                        }
-
-                        if (currentQuestionsId != 0)
-                        {
-                            for (int i = 1; i < 5; i++)
-                            {
-                                var questionbox = this.FindName("TbxAnswer" + i) as TextBox;
-                                var button = this.FindName("BtnAnswer" + i) as Button;
-
-                                if (questionbox != null && button != null )
-                                {
-                                    if(questionbox.Text != "")
-                                    {
-                                        if (EditingQuiz == false || Awnser_ids.Count == 0)
-                                        {
-                                            bool Correct = button.Background == Brushes.Green;
-
-                                            Query.ExecuteQueryNonQuery("INSERT INTO Answers (Question_Id, Answer, Correct) VALUES ('" + currentQuestionsId + "','" + questionbox.Text + "','" + Correct + "');");
-                                        }
-                                        else if (EditingQuiz == true && Awnser_ids.Count >= 1)
-                                        {
-                                            DataTable LastAnswer = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Id = '" + Awnser_ids[0] + "' ;");
-                                            foreach (DataRow row in LastAnswer.Rows)
-                                            {
-                                                if (row["Answer"].ToString() != questionbox.Text)
-                                                {
-                                                    Query.ExecuteQueryNonQuery("UPDATE Answers SET Anwser = '" + TbxQuizName.Text + "' WHERE Id = '" + Awnser_ids[0] + "';");
-                                                }
-
-                                                if (row["Correct"].ToString() == "True" && button.Background == Brushes.Red)
-                                                {
-                                                    Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = False WHERE Id = '" + Awnser_ids[0] + "';");
-                                                }
-                                                else if (row["Correct"].ToString() == "False" && button.Background == Brushes.Green)
-                                                {
-                                                    Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = True WHERE Id = '" + Awnser_ids[0] + "';");
-                                                }
-                                            }
-                                            Awnser_ids.RemoveAt(0);
-                                        }
-                                    }                                   
-                                }
-                            }
-                        }
-
-                        if (EditingQuiz == true && Question_ids.Count >= 1) Question_ids.RemoveAt(0);
-
-                        ClearTextBox();
-                        ClearButtons();
-
-                        ShowFilledin();
-
-                        CurrentScreen = 9;
-                        ScreenCheck();
+                        MessageBox.Show("Please fill in all the non optional answer fields");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Please fill in all the non optional fields");
+                    MessageBox.Show("Please select a correct answer");
+                }
+            }
+            else if (EditingQuiz == true)
+            {
+                var result = MessageBox.Show(
+                    "Are you sure you want to delete the question and the answers?",
+                    "Confirm Delete",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    Query.ExecuteQueryNonQuery("DELETE FROM Questions WHERE Id = '" + Question_ids[0] + "';");
+                    Query.ExecuteQueryNonQuery("DELETE FROM Answers WHERE Question_Id = '" + Question_ids[0] + "';");
+
+                    NextQuestion();
+                }
+                else
+                {
+                    MessageBox.Show("Please fill in the question box");
                 }
             }
             else
             {
-                MessageBox.Show("Please select a correct answer");
+                MessageBox.Show("Please fill in the question box");
             }
+        }
+
+        private void NextQuestion()
+        {
+            if (EditingQuiz == true && Question_ids.Count >= 1) Question_ids.RemoveAt(0);
+
+            ClearTextBox();
+            ClearButtons();
+
+            ShowFilledin();
+
+            CurrentScreen = 9;
+            ScreenCheck();
         }
 
         private void ClearTextBox()
