@@ -376,7 +376,7 @@
                 </RadialGradientBrush>
             </Grid.Background>
             <!-- Simplified and more elegant background pattern -->
-            
+
             <!--#region shapes -->
 
             <Canvas>
@@ -404,7 +404,7 @@
                         <RotateTransform Angle="30"/>
                     </Rectangle.RenderTransform>
                 </Rectangle>
-                
+
                 <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="1300" Canvas.Top="450">
                     <Rectangle.RenderTransform>
                         <RotateTransform Angle="30"/>
@@ -435,70 +435,70 @@
                         <GradientStop Color="#2D1B69" Offset="1.0"/>
                     </RadialGradientBrush>
                 </Border.Background>
-                
+
                 <Grid>
-                    
+
                     <!--#region shapes -->
 
-                <Canvas>
-                    <!-- Floating circles for modern look -->
-                    <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="50" Canvas.Top="40"/>
-                    <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
-                    <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
-                    <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="600" Canvas.Top="750"/>
-                    <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="350" Canvas.Top="350"/>
+                    <Canvas>
+                        <!-- Floating circles for modern look -->
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="50" Canvas.Top="40"/>
+                        <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
+                        <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
+                        <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="600" Canvas.Top="750"/>
+                        <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="350" Canvas.Top="350"/>
 
-                    <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="150" Canvas.Top="600"/>
-                    <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="400" Canvas.Top="700"/>
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="150" Canvas.Top="600"/>
+                        <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="400" Canvas.Top="700"/>
 
-                    <!-- Modern geometric shapes -->
-                    <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="150" Canvas.Top="350">
-                        <Rectangle.RenderTransform>
-                            <RotateTransform Angle="45"/>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
-                        <Rectangle.RenderTransform>
-                            <RotateTransform Angle="30"/>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="550" Canvas.Top="50">
-                        <Rectangle.RenderTransform>
-                            <RotateTransform Angle="30"/>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    
-                </Canvas>
-                
-                <!--#endregion-->
-                    
+                        <!-- Modern geometric shapes -->
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="150" Canvas.Top="350">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="550" Canvas.Top="50">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                    </Canvas>
+
+                    <!--#endregion-->
+
                     <Button Content="×" 
                         HorizontalAlignment="Right" VerticalAlignment="Top" 
                         Width="60" Height="60" Margin="20,20,20,0"
                         Style="{StaticResource CloseButton}" FontSize="30"
                         Click="BtnLogin_Click"/>
-                    
+
                     <TextBlock x:Name="LblQuizName" Text="ERROR" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="100" Foreground="White"/>
                     <TextBlock x:Name="LblQuizCreator" Text="Created by: Anonymous" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Margin="0,125,0,0" Foreground="White"/>
                     <StackPanel x:Name="SplAllHighScores" Orientation="Vertical" Width="500" Height="550" Margin="0,25,0,0" >
-                        
+
                     </StackPanel>
 
                     <StackPanel x:Name="SplButtons" Orientation="Horizontal" Width="300" Height="80" Margin="0,0,0,50" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                         <Button x:Name="BtnEditQuiz" FontSize="48" Content="Edit" Width="300" Height="80" Style="{StaticResource ModernButton}" Click="BtnEditQuiz_Click" Visibility="Collapsed"/>
                         <Button x:Name="BtnStartQuiz" FontSize="48" Content="Start Quiz" Width="300" Height="80" HorizontalAlignment="Center" Style="{StaticResource ModernButton}" Click="BtnStartQuiz_Click"/>
                     </StackPanel>
-                    
+
                 </Grid>
 
             </Border>
 
             <Grid x:Name="Screen5" Margin="0,100,0,0" Visibility="Collapsed">
-                <Label x:Name="LblStartTimer" Content="5" FontSize="250" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+                <Label x:Name="LblStartTimer" Content="5" FontSize="250" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" IsHitTestVisible="False"/>
             </Grid>
 
             <Grid x:Name="Screen6" Margin="0,100,0,0" Visibility="Collapsed">
-                <ProgressBar x:Name="PbrTimeLeft" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
+                <ProgressBar x:Name="PbrTimeLeft" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="5" Maximum="5">
                     <ProgressBar.Background>
                         <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">
                             <GradientStop Color="#3D1A66" Offset="0.1"/>
@@ -625,7 +625,7 @@
 
             </Border>
 
-            <Grid x:Name="Screen9" Margin="0,100,0,0">
+            <Grid x:Name="Screen9" Margin="0,100,0,0" Visibility="Collapsed">
                 <ProgressBar IsEnabled="False" HorizontalAlignment="Left" Height="50" Width="1920"  VerticalAlignment="Top" Value="60" Maximum="60">
                     <ProgressBar.Background>
                         <RadialGradientBrush GradientOrigin="0.3,0.9" RadiusX="1.2" RadiusY="1.2">
@@ -707,10 +707,82 @@
                         </Grid>
 
                     </Border>
-                    
+
                 </UniformGrid>
                 <Button x:Name="BtnNext" FontSize="48" Content="Next" Width="300" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25" Style="{StaticResource ModernButton}" Click="BtnNext_Click" ></Button>
             </Grid>
+
+            <Border x:Name="Screen10" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Visible">
+                <Border.Background>
+                    <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
+                        <GradientStop Color="#1A0033" Offset="0.0"/>
+                        <GradientStop Color="#4B0082" Offset="0.4"/>
+                        <GradientStop Color="#6A0DAD" Offset="0.8"/>
+                        <GradientStop Color="#2D1B69" Offset="1.0"/>
+                    </RadialGradientBrush>
+                </Border.Background>
+
+                <Grid>
+
+                    <!--#region shapes -->
+
+                    <Canvas>
+                        <!-- Floating circles for modern look -->
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="50" Canvas.Top="40"/>
+                        <Ellipse Width="80" Height="80" Fill="#FFFFFF" Opacity="0.08" Canvas.Left="300" Canvas.Top="200"/>
+                        <Ellipse Width="150" Height="150" Fill="#FFFFFF" Opacity="0.03" Canvas.Left="600" Canvas.Top="500"/>
+                        <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="600" Canvas.Top="750"/>
+                        <Ellipse Width="200" Height="200" Fill="#FFFFFF" Opacity="0.02" Canvas.Left="350" Canvas.Top="350"/>
+
+                        <Ellipse Width="120" Height="120" Fill="#FFFFFF" Opacity="0.05" Canvas.Left="150" Canvas.Top="600"/>
+                        <Ellipse Width="100" Height="100" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="400" Canvas.Top="700"/>
+
+                        <!-- Modern geometric shapes -->
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="150" Canvas.Top="350">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="45"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="40" Height="40" Fill="#FFFFFF" Opacity="0.06" Canvas.Left="700" Canvas.Top="180">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Width="60" Height="60" Fill="#FFFFFF" Opacity="0.04" Canvas.Left="550" Canvas.Top="50">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="30"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                    </Canvas>
+
+                    <!--#endregion-->
+
+                    <StackPanel Orientation="Vertical" x:Name="SplDelete" Width="90" HorizontalAlignment="Left" Margin="50,40,0,0">
+                        <TextBlock Text="delete" FontSize="32" Foreground="White"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" x:Name="SplUserId" Width="50" HorizontalAlignment="Left" Margin="170,40,0,0">
+                        <TextBlock Text="id" FontSize="32" Foreground="White"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" x:Name="SplType" Width="75" HorizontalAlignment="Left" Margin="250,40,0,0">
+                        <TextBlock Text="Type" FontSize="32" Foreground="White"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" x:Name="SplUserName" Width="430" HorizontalAlignment="Left" Margin="345,40,0,0">
+                        <TextBlock Text="username" FontSize="32" Foreground="White"></TextBlock>
+                    </StackPanel>
+
+                    <Button Content="×" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Width="60" Height="60" Margin="20,20,20,0"
+                        Style="{StaticResource CloseButton}" FontSize="30"
+                        Click="BtnLogin_Click"/>
+
+                </Grid>
+
+            </Border>
 
             <!-- Enhanced Header -->
             <Grid Height="100" VerticalAlignment="Top">
@@ -760,6 +832,13 @@
                         Width="60" Height="60" Margin="20,20,20,0"
                         Style="{StaticResource CloseButton}" FontSize="30"
                         Click="BtnClose_Click"/>
+
+                <!-- Header Close Button -->
+                <Button Content="Acounts" x:Name="BtnAcounts"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        Width="125" Height="60" Margin="0,0,100,0"
+                        Style="{StaticResource CloseButton}" FontSize="30"
+                        Click="BtnAcounts_Click"/>
 
                 <Button Content="&lt;-" x:Name="BtnBack"
                         HorizontalAlignment="Left" VerticalAlignment="Top" 

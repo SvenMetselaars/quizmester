@@ -33,13 +33,15 @@ namespace quizmester
         /// 7 = score screen (Screen7)
         /// 8 = create quiz start screen (Screen8)
         /// 9 = create quiz question screen (Screen9)
+        /// 10 = account management screen (Screen10)
         /// default screen is login screen
         /// </summary>
         int CurrentScreen = 1;
         // the max screen number... change this if you add more screens
-        int ScreenMax = 9;
+        int ScreenMax = 10;
 
         int PlayerId = 0;
+        string PlayerType = "User";
 
         int SkipAmount = 3;
 
@@ -58,6 +60,11 @@ namespace quizmester
         /// </summary>
         int CountDownNextQuestion;
 
+        /// <summary>
+        /// this is the time you have to answer the question in seconds
+        /// </summary>
+        int CountDownForQuestion;
+
         // this is the time you have to wait on the score screen in seconds
         int CountDownScoreScreen = -1;
         
@@ -72,7 +79,7 @@ namespace quizmester
         DispatcherTimer NewTimer;
 
         // the current quiz id
-        int CurrentQuizId = 0;
+        int CurrentQuizId = -1;
 
         List<string> Question_ids = new List<string>();
 
@@ -104,8 +111,13 @@ namespace quizmester
                 // go to game choise screen
                 CurrentScreen = 3;
 
-                var Account = Query.ExecuteScalar("SELECT Id FROM Accounts WHERE Username = '" + L_Username + "' ;");
-                PlayerId = Convert.ToInt32(Account);
+                DataTable Account = Query.GetDataTable("SELECT Id, Type FROM Accounts WHERE Username = '" + L_Username + "' ;");
+                foreach (DataRow row in Account.Rows)
+                {
+                    PlayerId = Convert.ToInt32(row["Id"]);
+                    PlayerType = row["Type"].ToString();
+                }
+                
 
             }
             else
@@ -204,7 +216,7 @@ namespace quizmester
                 if (screen != null)
                 {
                     // if the screen is the current screen, show it, else hide it
-                    if ((i == CurrentScreen) || (CurrentScreen == 4 && i == 3))
+                    if ((i == CurrentScreen) || (CurrentScreen == 4 && i == 3) || (CurrentScreen == 10 && i == 3))
                     {
                         screen.Visibility = Visibility.Visible;
 
@@ -220,6 +232,9 @@ namespace quizmester
                             {
                                 ShowQuizes();
                             } 
+
+                            if (CurrentScreen == 3 && PlayerType == "Admin") BtnAcounts.Visibility = Visibility.Visible;
+                            else BtnAcounts.Visibility = Visibility.Collapsed;
                         }
                         // if the screen is not the game choise screen, make the window normal and show the startup grid
                         else
@@ -410,7 +425,7 @@ namespace quizmester
             // find the button that was clicked
             Button button = sender as Button;
             CurrentQuizId = int.Parse(button.Tag.ToString());
-            if (CurrentQuizId != 0)
+            if (CurrentQuizId >= 0)
             {
                 // make the current screen the view screen
                 CurrentScreen = 4;
@@ -453,18 +468,12 @@ namespace quizmester
                         }
                     }
 
-                    // get the username from the database from the account id in the quiz
-                    DataTable DataAcountsAdmin = Query.GetDataTable("SELECT Type FROM Accounts WHERE Id = '" + PlayerId + "' ;");
-
-                    // go trough all the rows (should only be one)
-                    foreach (DataRow rowAcounts in DataAcountsAdmin.Rows)
+                    if (PlayerType == "Admin")
                     {
-                        if (rowAcounts["Type"].ToString() == "Admin")
-                        {
-                            SplButtons.Width = 600;
-                            BtnEditQuiz.Visibility = Visibility.Visible;
-                        }
+                        SplButtons.Width = 600;
+                        BtnEditQuiz.Visibility = Visibility.Visible;
                     }
+
 
                    
 
@@ -525,7 +534,7 @@ namespace quizmester
 
         private void BtnStartQuiz_Click(object sender, RoutedEventArgs e)
         {
-            if(CurrentQuizId != 0)
+            if(CurrentQuizId >= 0)
             {
                 var uniformGrid = this.FindName("SplAnswers") as UniformGrid;
                 uniformGrid.IsEnabled = true;
@@ -595,9 +604,17 @@ namespace quizmester
 
             if (GameStarted == true) 
             { 
-                CountDownEnd--; 
-                PbrTimeLeft.Value = CountDownEnd;
+                CountDownEnd--;
+                CountDownForQuestion--;
+                PbrTimeLeft.Value = CountDownForQuestion;
             } 
+
+            if (CountDownEnd <= 5 && GameStarted == true)
+            {
+                LblStartTimer.Content = CountDownEnd.ToString();
+                LblStartTimer.Visibility = Visibility.Visible;
+                Screen5.Visibility = Visibility.Visible;
+            }
 
             if (CountDownStart == 0 && GameStarted == false)
             {
@@ -616,6 +633,7 @@ namespace quizmester
 
                 // time to answer the questions
                 CountDownEnd = 60;
+                CountDownForQuestion = 5;
             }
             else if (CountDownEnd == 0 && GameStarted == true)
             {
@@ -623,12 +641,21 @@ namespace quizmester
                 timer.Stop();
                 UpdateScoreScreen();
             }
+            else if (CountDownForQuestion <= 0 && GameStarted == true)
+            {
+                Score -= 3;
+                CountDownForQuestion = 5;
+                PbrTimeLeft.Value = CountDownForQuestion;
+
+                ShowQuestion();       
+            }
         }
+
         private void GetQuestions()
         {
             Question_ids.Clear();
 
-            if (CurrentQuizId != 0)
+            if (CurrentQuizId >= 0)
             {
                 // get the quiz name from the database from the id in the button's Tag property
                 var Theme = Query.ExecuteScalar("SELECT Theme FROM Themes WHERE Id = '" + CurrentQuizId + "' ;");
@@ -636,6 +663,12 @@ namespace quizmester
 
                 // get the question ids from the database from the quiz id
                 DataTable DataQuestions = Query.GetDataTable("SELECT Id FROM Questions WHERE Theme_Id = '" + CurrentQuizId + "' ;");
+
+                if (CurrentQuizId == 0)
+                {
+                    DataQuestions = Query.GetDataTable("SELECT Id FROM Questions;");
+                }
+
                 // go trough all the rows and add the question ids to the list
                 foreach (DataRow rowQuestions in DataQuestions.Rows)
                 {
@@ -675,6 +708,8 @@ namespace quizmester
                 uniformGrid.Children.Add(button);
             }
 
+            CountDownForQuestion = 5;
+
             Question_ids.RemoveAt(0);
         }
 
@@ -705,6 +740,7 @@ namespace quizmester
             {
                 StartNewTimer();
                 CountDownNextQuestion = 1;
+                CountDownForQuestion = 6;
             }
             else
             {
@@ -769,6 +805,7 @@ namespace quizmester
                 }
 
                 SkipAmount--;
+                CountDownForQuestion = 5;
 
                 ShowQuestion();
 
@@ -959,16 +996,16 @@ namespace quizmester
                                                 {
                                                     if (row["Answer"].ToString() != questionbox.Text)
                                                     {
-                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Anwser = '" + TbxQuizName.Text + "' WHERE Id = '" + Awnser_ids[0] + "';");
+                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Answer = '" + questionbox.Text + "' WHERE Id = '" + Awnser_ids[0] + "';");
                                                     }
 
                                                     if (row["Correct"].ToString() == "True" && button.Background == Brushes.Red)
                                                     {
-                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = False WHERE Id = '" + Awnser_ids[0] + "';");
+                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = 'False' WHERE Id = '" + Awnser_ids[0] + "';");
                                                     }
                                                     else if (row["Correct"].ToString() == "False" && button.Background == Brushes.Green)
                                                     {
-                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = True WHERE Id = '" + Awnser_ids[0] + "';");
+                                                        Query.ExecuteQueryNonQuery("UPDATE Answers SET Correct = 'True' WHERE Id = '" + Awnser_ids[0] + "';");
                                                     }
                                                 }
                                                 Awnser_ids.RemoveAt(0);
@@ -1141,6 +1178,18 @@ namespace quizmester
             EditingQuiz = false;
             GameStarted = false;
 
+            ScreenCheck();
+        }
+
+        private void BtnAcounts_Click(object sender, RoutedEventArgs e)
+        {
+            DataTable Users = Query.GetDataTable("SELECT Username, Id, Type FROM Accounts ;");
+            foreach (DataRow Row in Users.Rows)
+            {
+                
+            }
+
+            CurrentScreen = 10;
             ScreenCheck();
         }
     }
