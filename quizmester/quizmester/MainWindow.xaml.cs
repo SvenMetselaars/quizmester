@@ -448,6 +448,7 @@ namespace quizmester
                     textBlock.Text = "Created by: Anonymous";
                     SplButtons.Width = 300;
                     BtnEditQuiz.Visibility = Visibility.Collapsed;
+                    BtnDeleteQuiz.Visibility = Visibility.Collapsed;
 
                     if (textBlock != null && rowThemes["Account_Id"] != null)
                     {
@@ -464,6 +465,7 @@ namespace quizmester
                             {
                                 SplButtons.Width = 600;
                                 BtnEditQuiz.Visibility = Visibility.Visible;
+                                BtnDeleteQuiz.Visibility = Visibility.Visible;
                             }
                         }
                     }
@@ -472,6 +474,8 @@ namespace quizmester
                     {
                         SplButtons.Width = 600;
                         BtnEditQuiz.Visibility = Visibility.Visible;
+                        if (CurrentQuizId != 0) BtnDeleteQuiz.Visibility = Visibility.Visible;
+                        else BtnDeleteQuiz.Visibility = Visibility.Collapsed;
                     }
 
 
@@ -1170,6 +1174,7 @@ namespace quizmester
                 case 7: // Score screen
                 case 8: // Create quiz screen
                 case 9: // Create question screen
+                case 10: // Accounts screen
                     CurrentScreen = 3; // go back to the game choice screen
                     break;
             }
@@ -1181,15 +1186,111 @@ namespace quizmester
             ScreenCheck();
         }
 
+        private void BtnAccountDelete_Click(object sender, RoutedEventArgs e)
+        {
+            // find the button that was clicked
+            Button button = sender as Button;
+            int UserId = int.Parse(button.Tag.ToString());
+            var result = MessageBox.Show(
+                "Are you sure you want to delete this account? All quizzes and scores will be deleted as well.",
+                "Confirm Delete",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+            );
+            if (result == MessageBoxResult.Yes)
+            {
+                Query.ExecuteQueryNonQuery("DELETE FROM Accounts WHERE Id = '" + UserId + "';");
+                Query.ExecuteQueryNonQuery("DELETE FROM Themes WHERE Account_Id = '" + UserId + "';");
+                Query.ExecuteQueryNonQuery("DELETE FROM Questions WHERE Theme_Id NOT IN (SELECT Id FROM Themes);");
+                Query.ExecuteQueryNonQuery("DELETE FROM Answers WHERE Question_Id NOT IN (SELECT Id FROM Questions);");
+                Query.ExecuteQueryNonQuery("DELETE FROM HighScores WHERE Username NOT IN (SELECT Username FROM Accounts);");
+                BtnAcounts_Click(null, null);
+            }
+        }
+
         private void BtnAcounts_Click(object sender, RoutedEventArgs e)
         {
+            SplDelete.Children.Clear();
+            SplUserId.Children.Clear();
+            SplType.Children.Clear();
+            SplUserName.Children.Clear();
             DataTable Users = Query.GetDataTable("SELECT Username, Id, Type FROM Accounts ;");
             foreach (DataRow Row in Users.Rows)
             {
-                
+                if(Row["Type"].ToString() != "Admin")
+                {               
+                    // create a button to view the quiz
+                    var CreateButton = new Button
+                    {
+                        Content = "Delete",
+                        FontSize = 24,
+                        Height = 43,
+                        Width = 100,
+                        Tag = Row["Id"].ToString(),
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        Margin = new Thickness(0, 0, 0, 10),
+                    };
+
+                    // Look for the style in this element's resource lookup chain
+                    CreateButton.Style = (Style)this.FindResource("CloseButton");
+                    // to add click event to the button
+                    CreateButton.Click += BtnAccountDelete_Click;
+
+                    SplDelete.Children.Add(CreateButton);
+                }
+                else
+                {
+                    // create a button to view the quiz
+                    var CreateButton = new TextBlock
+                    {
+                        Height = 45,
+                        Width = 75,
+                        FontSize = 24,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Margin = new Thickness(0, 0, 0, 10),
+                        Visibility = Visibility.Hidden
+                    };
+
+                    SplDelete.Children.Add(CreateButton);
+                }
+
+                SplUserId.Children.Add(new TextBlock
+                {
+                    Text = Row["Id"].ToString(),
+                    FontSize = 32,
+                    Margin = new Thickness(0, 0, 0, 10),
+                    Foreground = Brushes.White
+                });
+
+                SplType.Children.Add(new TextBlock
+                {
+                    Text = Row["Type"].ToString(),
+                    FontSize = 32,
+                    Margin = new Thickness(0, 0, 0, 10),
+                    Foreground = Brushes.White
+                });
+
+                SplUserName.Children.Add(new TextBlock
+                {
+                    Text = Row["Username"].ToString(),
+                    FontSize = 32,
+                    Margin = new Thickness(0, 0, 0, 10),
+                    Foreground = Brushes.White
+                });
             }
 
             CurrentScreen = 10;
+            ScreenCheck();
+        }
+
+        private void BtnDeleteQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            Query.ExecuteQueryNonQuery("DELETE FROM Themes WHERE Id = '" + CurrentQuizId + "';");
+            Query.ExecuteQueryNonQuery("DELETE FROM Questions WHERE Theme_Id NOT IN (SELECT Id FROM Themes);");
+            Query.ExecuteQueryNonQuery("DELETE FROM Answers WHERE Question_Id NOT IN (SELECT Id FROM Questions);");
+
+            CurrentScreen = 3;
             ScreenCheck();
         }
     }

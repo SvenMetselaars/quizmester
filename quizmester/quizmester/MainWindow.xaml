@@ -426,7 +426,7 @@
                 </WrapPanel>
             </Grid>
 
-            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Collapsed">
+            <Border x:Name="Screen4" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Visible">
                 <Border.Background>
                     <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
                         <GradientStop Color="#1A0033" Offset="0.0"/>
@@ -489,6 +489,12 @@
                         <Button x:Name="BtnStartQuiz" FontSize="48" Content="Start Quiz" Width="300" Height="80" HorizontalAlignment="Center" Style="{StaticResource ModernButton}" Click="BtnStartQuiz_Click"/>
                     </StackPanel>
 
+                    <Button Content="Delete" x:Name="BtnDeleteQuiz"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Width="100" Height="40" Margin="30,30,30,0"
+                        Style="{StaticResource CloseButton}" FontSize="30"
+                        Click="BtnDeleteQuiz_Click"/>
+                    
                 </Grid>
 
             </Border>
@@ -712,7 +718,7 @@
                 <Button x:Name="BtnNext" FontSize="48" Content="Next" Width="300" Height="80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25" Style="{StaticResource ModernButton}" Click="BtnNext_Click" ></Button>
             </Grid>
 
-            <Border x:Name="Screen10" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Visible">
+            <Border x:Name="Screen10" Width="800" Height="900" Margin="0,90,0,0" CornerRadius="70" Panel.ZIndex="10" Visibility="Collapsed">
                 <Border.Background>
                     <RadialGradientBrush GradientOrigin="0.3,0.3" RadiusX="1.2" RadiusY="1.2">
                         <GradientStop Color="#1A0033" Offset="0.0"/>
@@ -758,20 +764,20 @@
 
                     <!--#endregion-->
 
-                    <StackPanel Orientation="Vertical" x:Name="SplDelete" Width="90" HorizontalAlignment="Left" Margin="50,40,0,0">
-                        <TextBlock Text="delete" FontSize="32" Foreground="White"></TextBlock>
+                    <TextBlock Text="delete" FontSize="32" Foreground="White" Margin="50,30,0,0"></TextBlock>
+                    <StackPanel Orientation="Vertical" x:Name="SplDelete" Width="100" HorizontalAlignment="Left" Margin="50,80,0,0">
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical" x:Name="SplUserId" Width="50" HorizontalAlignment="Left" Margin="170,40,0,0">
-                        <TextBlock Text="id" FontSize="32" Foreground="White"></TextBlock>
+                    <TextBlock Text="id" FontSize="32" Foreground="White" Margin="170,30,0,0"></TextBlock>
+                    <StackPanel Orientation="Vertical" x:Name="SplUserId" Width="50" HorizontalAlignment="Left" Margin="170,80,0,0">
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical" x:Name="SplType" Width="75" HorizontalAlignment="Left" Margin="250,40,0,0">
-                        <TextBlock Text="Type" FontSize="32" Foreground="White"></TextBlock>
+                    <TextBlock Text="Type" FontSize="32" Foreground="White" Margin="240,30,0,0"></TextBlock>
+                    <StackPanel Orientation="Vertical" x:Name="SplType" Width="100" HorizontalAlignment="Left" Margin="240,80,0,0">
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical" x:Name="SplUserName" Width="430" HorizontalAlignment="Left" Margin="345,40,0,0">
-                        <TextBlock Text="username" FontSize="32" Foreground="White"></TextBlock>
+                    <TextBlock Text="username" FontSize="32" Foreground="White" Margin="360,30,0,0"></TextBlock>
+                    <StackPanel Orientation="Vertical" x:Name="SplUserName" Width="430" HorizontalAlignment="Left" Margin="360,80,0,0">
                     </StackPanel>
 
                     <Button Content="×" 
