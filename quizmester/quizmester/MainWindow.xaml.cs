@@ -43,7 +43,7 @@ namespace quizmester
         int PlayerId = 0;
         string PlayerType = "User";
 
-        int SkipAmount = 3;
+        int SkipAmount = 1;
 
         /// <summary>
         /// countdown timer for the start of the quiz 
@@ -230,6 +230,7 @@ namespace quizmester
 
                             if (i >= 3 && i < 5)
                             {
+                                lblname.Text = "Pathoot";
                                 ShowQuizes();
                             } 
 
@@ -547,12 +548,15 @@ namespace quizmester
                 CurrentScreen = 5;
                 ScreenCheck();
 
-                SkipAmount = 3;
+                SkipAmount = 1;
 
                 // reset the score
                 Score = 0;
 
                 LblStartTimer.Visibility = Visibility.Visible;
+
+                if (RbtnInfTime.IsChecked == false) PbrTimeLeft.Visibility = Visibility.Visible;
+                else PbrTimeLeft.Visibility = Visibility.Collapsed;
 
                 // set the countdown time in seconds
                 CountDownStart = 5;
@@ -606,7 +610,7 @@ namespace quizmester
             // show the countdown in the label
             LblStartTimer.Content = CountDownStart.ToString();
 
-            if (GameStarted == true) 
+            if (GameStarted == true && RbtnInfTime.IsChecked == false) 
             { 
                 CountDownEnd--;
                 CountDownForQuestion--;
@@ -733,7 +737,11 @@ namespace quizmester
             }
             else
             {
-                Score -= 3;
+                if(RbtnDeath.IsChecked == false) Score -= 3;
+                else
+                {
+                    Question_ids.Clear();
+                }
                 button.Background = Brushes.Red;
                 button.IsEnabled = false;
                 uniformGrid.IsEnabled = false;
@@ -776,9 +784,13 @@ namespace quizmester
 
             LblQuestionScore.Text = Score.ToString();
 
-            LblTimeScore.Text = CountDownEnd.ToString();
+            int FinalScore = Score;
 
-            int FinalScore = Score + CountDownEnd;
+            if (RbtnInfTime.IsChecked == false)
+            {
+                LblTimeScore.Text = CountDownEnd.ToString();
+                FinalScore += CountDownEnd;
+            }
             LblYourScore.Text = FinalScore.ToString();
 
             CountDownScoreScreen = 5;

@@ -484,6 +484,18 @@
 
                     </StackPanel>
 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,175">
+                        <TextBlock FontSize="32" Foreground="White" Margin="0,0,50,0" Width="105" Text="Normal"/>
+                        <TextBlock FontSize="32" Foreground="White" Text="Sudden Death" Margin="0,0,50,0"/>
+                        <TextBlock FontSize="32" Foreground="White" Text="Inf Time"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,150">
+                        <RadioButton x:Name="RbtnNormal" Foreground="White" IsChecked="True" Margin="0,0,190,0"/>
+                        <RadioButton x:Name="RbtnDeath" Foreground="White" Margin="0,0,190,0"/>
+                        <RadioButton x:Name="RbtnInfTime" Foreground="White"/>
+                    </StackPanel>
+
                     <StackPanel x:Name="SplButtons" Orientation="Horizontal" Width="300" Height="80" Margin="0,0,0,50" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                         <Button x:Name="BtnEditQuiz" FontSize="48" Content="Edit" Width="300" Height="80" Style="{StaticResource ModernButton}" Click="BtnEditQuiz_Click" Visibility="Collapsed"/>
                         <Button x:Name="BtnStartQuiz" FontSize="48" Content="Start Quiz" Width="300" Height="80" HorizontalAlignment="Center" Style="{StaticResource ModernButton}" Click="BtnStartQuiz_Click"/>
