@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +22,17 @@ namespace quizmester
     /// </summary>
     public partial class MainWindow : Window
     {
+        [DllImport("winmm.dll")]
+        private static extern long mciSendString(string command, StringBuilder returnValue, int returnLength, IntPtr winHandle);
 
+        bool audiostop = true;
+
+        /// <summary>
+        /// random number generator
+        /// </summary>
+        Random random = new Random();
+
+        int specialQuestionId = -1;
 
         /// <summary>
         /// 1 = login screen (Screen1)
@@ -55,6 +66,12 @@ namespace quizmester
         /// amount of skips the player has
         /// </summary>
         int SkipAmount = 1;
+
+        /// <summary>
+        /// amount of jokers the player has
+        /// </summary>
+        int jokerAmount = 1;
+        int questionId = 0;
 
         /// <summary>
         /// countdown timer for the start of the quiz 
@@ -603,6 +620,13 @@ namespace quizmester
 
                 // amount of skips
                 SkipAmount = 1;
+                jokerAmount = 0;
+                questionId = 0;
+
+                BtnSkip.Margin = new Thickness(65, 0, 0, 0);
+                BtnSkip.Visibility = Visibility.Visible;
+                Btnjoker.Margin = new Thickness(75, 0, 0, 0);
+                Btnjoker.Visibility = Visibility.Visible;
 
                 // reset the score
                 Score = 0;
@@ -612,7 +636,7 @@ namespace quizmester
 
                 // check the gamemode and change gameplay acordingly
                 if (RbtnInfTime.IsChecked == false) PbrTimeLeft.Visibility = Visibility.Visible;
-                else PbrTimeLeft.Visibility = Visibility.Collapsed;
+                else PbrTimeLeft.Visibility = Visibility.Collapsed; 
 
                 // set the countdown time in seconds
                 CountDownStart = 5;
@@ -681,10 +705,14 @@ namespace quizmester
                 CountDownEnd--;
                 CountDownForQuestion--;
                 PbrTimeLeft.Value = CountDownForQuestion;
-            } 
+            }
+            else if (GameStarted == true && RbtnInfTime.IsChecked == true)
+            {
+                CountDownEnd++;
+            }
 
             // if the total time is almost done and the game has started than show the final countdown
-            if (CountDownEnd <= 5 && GameStarted == true)
+            if (CountDownEnd <= 5 && GameStarted == true && RbtnInfTime.IsChecked == false )
             {
                 LblStartTimer.Content = CountDownEnd.ToString();
                 LblStartTimer.Visibility = Visibility.Visible;
@@ -709,6 +737,8 @@ namespace quizmester
                 // time to answer the questions
                 CountDownEnd = 60;
                 CountDownForQuestion = 5;
+
+                if (RbtnInfTime.IsChecked == true ) CountDownEnd = 0;
             }
             else if (CountDownEnd == 0 && GameStarted == true)
             {
@@ -755,6 +785,8 @@ namespace quizmester
                 }
 
                 Question_ids = Question_ids.OrderBy(x => Guid.NewGuid()).ToList(); // shuffle the list
+
+                specialQuestionId = random.Next(0, Question_ids.Count);
             }
         }
 
@@ -766,6 +798,10 @@ namespace quizmester
             // get the question from the database from the question id
             var Question = Query.ExecuteScalar("SELECT Question FROM Questions WHERE Id = '" + Question_ids[0] + "' ;");
             LblQuestion.Text = Question.ToString();
+
+            questionId = int.Parse(Question_ids[0]);
+
+            if (questionId == specialQuestionId) PlaySound();
 
             // get the answers from the database from the question id
             DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + Question_ids[0] + "' ORDER BY NEWID();");
@@ -786,6 +822,7 @@ namespace quizmester
                     Margin = new Thickness(10),
                     Tag = RowAnswers["Correct"].ToString(), // store if the answer is correct in the button's Tag property
                 };
+                if (questionId == specialQuestionId) button.Background = Brushes.Gold;
                 // Look for the style in this element's resource lookup chain
                 button.Style = (Style)this.FindResource("ModernButton");
                 // to add click event to the button
@@ -801,7 +838,6 @@ namespace quizmester
 
         private void BtnAnswer_Click(object sender, RoutedEventArgs e)
         {
-
             // get the button info
             Button button = sender as Button;
             string isCorrect = button.Tag.ToString();
@@ -813,7 +849,8 @@ namespace quizmester
             if (isCorrect == "True")
             {
                 // change scrore and visuals
-                Score += 5;
+                if (questionId == specialQuestionId) Score += 10;
+                else Score += 5;
                 button.Background = Brushes.Green;
                 button.IsEnabled = false;
                 uniformGrid.IsEnabled = false;
@@ -822,17 +859,24 @@ namespace quizmester
             else
             {
                 // change score and visuals
-                if (RbtnDeath.IsChecked == false) Score -= 3;
+                if (RbtnDeath.IsChecked == false)
+                {                   
+                    if (questionId == specialQuestionId) Score -= 6;
+                    else Score -= 3;
+                }
                 // get rid of all the questions if death mode is on
                 else
                 {
                     Question_ids.Clear();
                 }
+
                 button.Background = Brushes.Red;
                 button.IsEnabled = false;
                 uniformGrid.IsEnabled = false;
 
             }
+
+            if (RbtnInfTime.IsChecked == true) CountDownEnd += 5;
 
             // if there are more questions, go to next question
             if (Question_ids.Count > 0)
@@ -890,6 +934,15 @@ namespace quizmester
                 LblTimeScore.Text = CountDownEnd.ToString();
                 FinalScore += CountDownEnd;
             }
+            // add the time score for inf time
+            else if (RbtnInfTime.IsChecked == true)
+            {
+                int newTimeScore = 60 - CountDownEnd;
+                if (newTimeScore < 0) newTimeScore = 0;
+                LblTimeScore.Text = newTimeScore.ToString();
+                FinalScore += newTimeScore;
+            }
+            
             // final score show
             LblYourScore.Text = FinalScore.ToString();
 
@@ -939,6 +992,62 @@ namespace quizmester
                 if (SkipAmount == 0)
                 {
                     BtnSkip.Visibility = Visibility.Collapsed;
+                    Btnjoker.Margin = new Thickness(250, 0, 0, 0);
+                }
+            }
+        }
+
+        private void Btnjoker_Click(object sender, RoutedEventArgs e)
+        {
+            if (jokerAmount > 0 && questionId > 0)
+            {
+                jokerAmount--;
+
+                // get the answers from the database from the question id
+                DataTable DataAnswers_Id = Query.GetDataTable("SELECT Answer, Correct FROM Answers WHERE Question_Id = '" + questionId + "' ORDER BY NEWID();");
+
+                // get  the grid
+                var uniformGrid = this.FindName("SplAnswers") as UniformGrid;
+                uniformGrid.Children.Clear();
+
+                int i = 0;
+                // go trough all the rows and add the answers to the buttons
+                foreach (DataRow RowAnswers in DataAnswers_Id.Rows)
+                {
+                    if (i == 0 || RowAnswers["Correct"].ToString() == "True")
+                    {
+                        var button = new Button
+                        {
+                            Content = RowAnswers["Answer"].ToString(),
+                            FontSize = 32,
+                            Width = 350,
+                            Height = 250,
+                            Margin = new Thickness(10),
+                            Tag = RowAnswers["Correct"].ToString(), // store if the answer is correct in the button's Tag property
+                        };
+
+                        if (questionId == specialQuestionId) button.Background = Brushes.Gold;                         
+
+                        // Look for the style in this element's resource lookup chain
+                        button.Style = (Style)this.FindResource("ModernButton");
+                        // to add click event to the button
+                        button.Click += BtnAnswer_Click;
+                        // add the button to the stack panel
+                        uniformGrid.Children.Add(button);
+                    }
+
+                    if ( RowAnswers["Correct"].ToString() != "True" )
+                    {
+                        i++;
+                    }
+                }
+
+                CountDownForQuestion = 5;
+
+                if (jokerAmount == 0)
+                {
+                    Btnjoker.Visibility = Visibility.Collapsed;
+                    BtnSkip.Margin = new Thickness(250, 0, 0, 0);
                 }
             }
         }
@@ -1539,6 +1648,20 @@ namespace quizmester
             // change the screen back to game choice
             CurrentScreen = 3;
             ScreenCheck();
+        }
+
+        /// <summary>
+        /// sound function to play the specialquestion answer sound
+        /// </summary>
+        private void PlaySound()
+        {
+            string m_location = AppDomain.CurrentDomain.BaseDirectory;
+            m_location = System.IO.Path.Combine(m_location, @"..\..\..\snd\right.wav");
+
+            mciSendString($"open \"{m_location}\" type mpegvideo alias MediaFile", null, 0, IntPtr.Zero);
+            mciSendString("play MediaFile", null, 0, IntPtr.Zero);
+
+            audiostop = false;
         }
     }
 }
