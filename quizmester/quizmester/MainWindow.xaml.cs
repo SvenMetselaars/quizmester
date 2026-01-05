@@ -620,7 +620,7 @@ namespace quizmester
 
                 // amount of skips
                 SkipAmount = 1;
-                jokerAmount = 0;
+                jokerAmount = 1;
                 questionId = 0;
 
                 BtnSkip.Margin = new Thickness(65, 0, 0, 0);
@@ -860,7 +860,7 @@ namespace quizmester
             {
                 // change score and visuals
                 if (RbtnDeath.IsChecked == false)
-                {                   
+                {
                     if (questionId == specialQuestionId) Score -= 6;
                     else Score -= 3;
                 }
@@ -874,9 +874,9 @@ namespace quizmester
                 button.IsEnabled = false;
                 uniformGrid.IsEnabled = false;
 
+                if (RbtnInfTime.IsChecked == true) CountDownEnd += 5;
             }
-
-            if (RbtnInfTime.IsChecked == true) CountDownEnd += 5;
+                   
 
             // if there are more questions, go to next question
             if (Question_ids.Count > 0)
